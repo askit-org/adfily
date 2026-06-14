@@ -60,9 +60,29 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+    <>
+      {/* Mobile Drawer Backdrop (Blurs the rest of the page and blocks interactions) */}
+      {isOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-md z-40 transition-all duration-300 animate-fade-in"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled || isOpen
           ? "glass-nav py-4 shadow-lg"
           : "bg-transparent py-6"
@@ -160,5 +180,6 @@ export default function Navbar() {
         </div>
       )}
     </nav>
+    </>
   );
 }
