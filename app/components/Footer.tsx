@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -25,24 +26,29 @@ export default function Footer() {
           </h4>
           <ul className="space-y-3 text-sm">
             <li>
-              <a href="#about" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
+              <Link href="/#about" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
                 About Us
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#services" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
+              <Link href="/#services" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
                 Our Services
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#why-choose-us" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
+              <Link href="/#why-choose-us" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
                 Why Choose Us
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#how-we-work" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
+              <Link href="/#how-we-work" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
                 How We Work
-              </a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/blog" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
+                Blog Insights
+              </Link>
             </li>
           </ul>
         </div>
