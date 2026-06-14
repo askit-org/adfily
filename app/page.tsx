@@ -1,294 +1,796 @@
-import React from 'react';
-import Link from 'next/link';
-import { ArrowRight, Sparkles, TrendingUp, Video, Globe, Zap, Users, BarChart3 } from 'lucide-react';
+'use client';
 
-const mockLogos = [
-  { name: 'VERTEX', path: <path d="M4 18L12 4L20 18H4Z" /> },
-  { name: 'ORBIT', path: <g><circle cx="12" cy="12" r="8" strokeDasharray="4 2" /><circle cx="12" cy="12" r="3" fill="currentColor" /></g> },
-  { name: 'NEXUS', path: <path d="M12 2L2 22H22L12 2ZM12 8L18 18H6L12 8Z" /> },
-  { name: 'ECLIPSE', path: <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" /> },
-  { name: 'CHRONO', path: <path d="M6 2h12v4l-4 4 4 4v4H6v-4l4-4-4-4V2zm2 2v1.5h8V4H8zm0 12.5V18h8v-1.5H8z" /> },
-  { name: 'APEX', path: <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" /> },
+import React, { useState } from 'react';
+import { 
+  ArrowRight, 
+  Sparkles, 
+  Check, 
+  Share2, 
+  Search, 
+  FileText, 
+  Users, 
+  Flame, 
+  Camera, 
+  Film, 
+  Smartphone, 
+  Palette, 
+  Laptop, 
+  Phone, 
+  Mail, 
+  MapPin, 
+  Send, 
+  CheckCircle2,
+  Award,
+  MessageSquare
+} from 'lucide-react';
+
+// Services Data matching the user request
+const services = [
+  {
+    icon: <Share2 className="w-6 h-6 text-accent-purple-light" />,
+    name: 'Social Media Marketing',
+    desc: 'Build a strong presence across Instagram, Facebook, LinkedIn, and other social platforms. Our social media marketing strategies are designed to increase brand awareness, engagement, and customer acquisition.',
+    offers: [
+      'Social Media Management',
+      'Content Planning & Scheduling',
+      'Community Management',
+      'Brand Growth Strategies',
+      'Monthly Performance Reports'
+    ]
+  },
+  {
+    icon: <Search className="w-6 h-6 text-accent-purple-light" />,
+    name: 'Search Engine Optimization (SEO)',
+    desc: 'Improve your website\'s Google rankings and attract high-quality organic traffic. Our SEO strategies help your business get discovered by customers actively searching for your products and services.',
+    offers: [
+      'Keyword Research',
+      'On-Page SEO',
+      'Technical SEO',
+      'Local SEO',
+      'SEO Audits & Reporting'
+    ]
+  },
+  {
+    icon: <FileText className="w-6 h-6 text-accent-purple-light" />,
+    name: 'Content Strategy',
+    desc: 'Content is the foundation of digital growth. We create data-driven content strategies that help brands connect with their target audience and achieve long-term success.',
+    offers: [
+      'Content Planning',
+      'Audience Research',
+      'Content Calendars',
+      'Brand Messaging',
+      'Content Performance Analysis'
+    ]
+  },
+  {
+    icon: <Users className="w-6 h-6 text-accent-purple-light" />,
+    name: 'Influencer Marketing',
+    desc: 'Connect with the right influencers to increase brand credibility, reach new audiences, and drive authentic engagement.',
+    offers: [
+      'Influencer Research',
+      'Campaign Management',
+      'Collaboration Coordination',
+      'Performance Tracking',
+      'Brand Partnership Strategies'
+    ]
+  },
+  {
+    icon: <Flame className="w-6 h-6 text-accent-purple-light" />,
+    name: 'Promotions & Brand Campaigns',
+    desc: 'Launch impactful promotional campaigns that increase visibility, generate leads, and boost sales.',
+    offers: [
+      'Product Launch Campaigns',
+      'Brand Awareness Campaigns',
+      'Seasonal Promotions',
+      'Event Marketing',
+      'Campaign Strategy & Execution'
+    ]
+  },
+  {
+    icon: <Camera className="w-6 h-6 text-accent-purple-light" />,
+    name: 'Video Production & Brand Shoots',
+    desc: 'Professional video shoots that showcase your products, services, and brand story with high-quality visuals.',
+    offers: [
+      'Product Shoots',
+      'Brand Shoots',
+      'Corporate Videos',
+      'Promotional Videos',
+      'Social Media Reels Production'
+    ]
+  },
+  {
+    icon: <Film className="w-6 h-6 text-accent-purple-light" />,
+    name: 'Video Editing',
+    desc: 'Transform raw footage into engaging content that captures attention and drives results across social media platforms.',
+    offers: [
+      'Reels Editing',
+      'YouTube Video Editing',
+      'Short-form Content',
+      'Motion Graphics',
+      'Promotional Video Editing'
+    ]
+  },
+  {
+    icon: <Smartphone className="w-6 h-6 text-accent-purple-light" />,
+    name: 'UGC Content Creation',
+    desc: 'Authentic User-Generated Content (UGC) that builds trust, increases engagement, and helps brands connect with modern consumers.',
+    offers: [
+      'Product Demonstrations',
+      'Customer Experience Videos',
+      'Lifestyle Content',
+      'Testimonial Videos',
+      'Social Media UGC Campaigns'
+    ]
+  },
+  {
+    icon: <Palette className="w-6 h-6 text-accent-purple-light" />,
+    name: 'Graphic Design',
+    desc: 'Creative designs that strengthen your brand identity and leave a lasting impression on your audience.',
+    offers: [
+      'Social Media Creatives',
+      'Brand Identity Design',
+      'Marketing Materials',
+      'Ad Creatives',
+      'Promotional Graphics'
+    ]
+  },
+  {
+    icon: <Laptop className="w-6 h-6 text-accent-purple-light" />,
+    name: 'Website Development',
+    desc: 'Create a professional, responsive, and SEO-friendly website that helps your business stand out and convert visitors into customers.',
+    offers: [
+      'Business Websites',
+      'E-commerce Websites',
+      'Landing Pages',
+      'Website Redesign',
+      'Website Maintenance & Optimization'
+    ]
+  }
+];
+
+// Why Choose Us Data matching the user request
+const whyChooseUs = [
+  {
+    title: 'Customized Marketing Strategies',
+    desc: 'Every business is unique. We craft personalized campaigns designed to match your specific industry goals.'
+  },
+  {
+    title: 'Experienced Digital Marketing Team',
+    desc: 'Our experts live and breathe digital trends, delivering skilled execution across all marketing channels.'
+  },
+  {
+    title: 'Data-Driven Campaign Management',
+    desc: 'We don\'t guess. We track metrics, analyze results, and continuously optimize for maximum ROI.'
+  },
+  {
+    title: 'Transparent Communication',
+    desc: 'Stay informed with clear reporting, regular updates, and absolute honesty regarding your campaigns.'
+  },
+  {
+    title: 'Creative Content Solutions',
+    desc: 'Hook your audience with visually arresting designs, engaging scripts, and high-quality video assets.'
+  },
+  {
+    title: 'Focus on Business Growth',
+    desc: 'We prioritize conversions and revenue over vanity metrics like likes or superficial views.'
+  },
+  {
+    title: 'Affordable Marketing Packages',
+    desc: 'Get high-end enterprise agency service tailored to budgets that scale with your growing company.'
+  },
+  {
+    title: 'Dedicated Client Support',
+    desc: 'Your peace of mind is our priority. We are always responsive and available when you need us.'
+  }
+];
+
+// How We Work Data matching the user request
+const howWeWork = [
+  {
+    step: '1',
+    title: 'Strategy',
+    desc: 'Understanding your business goals, audience, and competitors.'
+  },
+  {
+    step: '2',
+    title: 'Planning',
+    desc: 'Creating a customized marketing roadmap.'
+  },
+  {
+    step: '3',
+    title: 'Execution',
+    desc: 'Implementing campaigns, content, and growth strategies.'
+  },
+  {
+    step: '4',
+    title: 'Optimization',
+    desc: 'Analyzing performance and continuously improving results.'
+  },
+  {
+    step: '5',
+    title: 'Growth',
+    desc: 'Scaling campaigns for long-term success.'
+  }
+];
+
+// Client Logos Data
+const clientLogos = [
+  { name: 'Corporate Enterprises', path: '/clients/Corporate Enterprises.png' },
+  { name: 'Praana', path: '/clients/Praana.png' },
+  { name: 'SR events', path: '/clients/SR events.png' },
+  { name: 'Abhinav Organic World', path: '/clients/abhinav organic world.png' },
+  { name: 'Anas Classes', path: '/clients/anas classes.png' },
+  { name: 'Assembly of Green', path: '/clients/assembly of green.png' },
+  { name: 'Black Rose', path: '/clients/black rose.png' },
+  { name: 'Glamour Box', path: '/clients/glamour box.jpg' },
+  { name: 'Hair Bloom', path: '/clients/hair bloom.png' },
+  { name: 'Jyoti Beauty Salon', path: '/clients/jyoti beauty salon.png' },
+  { name: 'M Shining Star', path: '/clients/m shining star.png' },
+  { name: 'Mobo Fix', path: '/clients/mobo fix.png' },
+  { name: 'PTN Promos', path: '/clients/ptn_promos.png' },
+  { name: 'Royal Foam & Furnishing', path: '/clients/royal foam & furnishing.png' },
+  { name: 'Shah Enterprises', path: '/clients/shah enterprises.png' },
+  { name: 'Sherkhan', path: '/clients/sherkhan.png' },
+  { name: 'Sizzlings Kitchen', path: '/clients/sizzlings kitchen.png' },
+  { name: 'Vaishnavi Electricals', path: '/clients/vaishnavi electricals.png' },
 ];
 
 export default function HomePage() {
+  // Contact Form State
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.phone || !formData.message) {
+      setErrorMsg('Please fill in all required fields.');
+      return;
+    }
+    setIsSubmitting(true);
+    setErrorMsg('');
+    
+    // Simulate API request
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSubmitted(true);
+      setFormData({ name: '', email: '', phone: '', company: '', message: '' });
+    }, 1200);
+  };
+
   return (
-    <div className="space-y-24 pb-20 overflow-hidden">
+    <div className="space-y-32 pb-24 overflow-hidden">
       {/* 1. HERO SECTION */}
-      <section className="relative min-h-[85vh] flex items-center justify-center px-6 md:px-12 pt-10">
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Hero Text */}
-          <div className="lg:col-span-7 space-y-8 text-left z-10 animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-purple/10 border border-accent-purple/20 text-xs font-semibold text-accent-purple-light uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Full-Spectrum Digital Agency</span>
-            </div>
-            
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] text-white">
-              We Defy the <br />
-              <span className="bg-gradient-to-r from-accent-purple via-accent-purple-light to-white bg-clip-text text-transparent text-glow">
-                Gravity
-              </span> of Standard Marketing.
-            </h1>
-            
-            <p className="text-muted-silver text-base sm:text-lg md:text-xl max-w-xl font-normal leading-relaxed">
-              A full-spectrum digital agency scaling brands through hyper-targeted strategies, disruptive content creation, and talent management.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 pt-2">
-              <Link
-                href="/services"
-                className="btn-glow px-8 py-4 bg-gradient-to-r from-accent-purple to-accent-purple-light text-white font-bold rounded-xl text-center shadow-[0_4px_20px_rgba(124,58,237,0.4)] hover:shadow-[0_4px_30px_rgba(124,58,237,0.6)] transition-all duration-300 flex items-center justify-center gap-2 group"
-              >
-                <span>Explore Our Services</span>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                href="/contact"
-                className="px-8 py-4 border border-white/10 hover:border-accent-purple/50 bg-white/5 hover:bg-accent-purple/5 text-white font-bold rounded-xl text-center transition-all duration-300"
-              >
-                Work With Us
-              </Link>
-            </div>
+      <section id="home" className="relative min-h-[90vh] flex items-center justify-center px-6 md:px-12 pt-8">
+        {/* Glow backdrop decorative */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-accent-purple/15 rounded-full blur-[120px] pointer-events-none -z-10" />
+
+        <div className="max-w-6xl mx-auto w-full text-center space-y-8 animate-fade-in-up">
+          {/* Slogan badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-purple/10 border border-accent-purple/20 text-xs font-semibold text-accent-purple-light uppercase tracking-widest">
+            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
+            <span>Your Growth, Our Strategy.</span>
           </div>
 
-          {/* Hero Decorative Floating Graphic */}
-          <div className="lg:col-span-5 flex justify-center items-center relative h-[350px] lg:h-[450px]">
-            <div className="absolute w-[280px] h-[280px] md:w-[350px] md:h-[350px] bg-gradient-to-tr from-accent-purple/30 to-accent-purple-light/10 rounded-full blur-3xl opacity-50 animate-pulse" />
-            {/* Spinning vector orbit */}
-            <div className="relative w-72 h-72 md:w-96 md:h-96 flex items-center justify-center animate-[spin_40s_linear_infinite]">
-              <svg viewBox="0 0 100 100" className="w-full h-full text-accent-purple-light stroke-current fill-none opacity-40">
-                <circle cx="50" cy="50" r="45" strokeWidth="0.5" strokeDasharray="3 3" />
-                <circle cx="50" cy="50" r="30" strokeWidth="0.75" />
-                <ellipse cx="50" cy="50" rx="45" ry="15" strokeWidth="0.5" transform="rotate(45 50 50)" />
-                <ellipse cx="50" cy="50" rx="45" ry="15" strokeWidth="0.5" transform="rotate(-45 50 50)" />
-              </svg>
-              {/* Inner floating core */}
-              <div className="absolute w-24 h-24 md:w-32 md:h-32 bg-[#121214] border border-accent-purple/30 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(124,58,237,0.2)] animate-[bounce_6s_ease-in-out_infinite]">
-                <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center bg-gradient-to-br from-accent-purple to-accent-purple-light rounded-full shadow-[0_0_20px_rgba(168,85,247,0.6)]">
-                  <Zap className="w-6 h-6 md:w-8 md:h-8 text-white animate-pulse" />
-                </div>
-              </div>
-            </div>
+          {/* Main Heading H1 */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.15] text-white max-w-4xl mx-auto">
+            Digital Marketing Agency <br className="hidden md:block" />
+            <span className="bg-gradient-to-r from-accent-purple via-accent-purple-light to-white bg-clip-text text-transparent text-glow">
+              That Helps Your Business
+            </span>{' '}
+            Grow Online
+          </h1>
+
+          {/* Sub Heading */}
+          <p className="text-muted-silver text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+            At Adfily, we help businesses increase their online visibility, generate quality leads, build brand authority, and drive measurable growth through strategic digital marketing solutions.
+          </p>
+
+          {/* Call to Actions */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
+            <a
+              href="#contact"
+              className="btn-glow px-8 py-4 bg-gradient-to-r from-accent-purple to-accent-purple-light text-white font-bold rounded-xl shadow-[0_4px_20px_rgba(124,58,237,0.4)] hover:shadow-[0_4px_30px_rgba(124,58,237,0.6)] transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto"
+            >
+              <span>Book Your Free Consultation Today</span>
+              <ArrowRight className="w-5 h-5" />
+            </a>
+            <a
+              href="#services"
+              className="px-8 py-4 border border-white/10 hover:border-accent-purple/50 bg-white/5 hover:bg-accent-purple/5 text-white font-bold rounded-xl transition-all duration-300 w-full sm:w-auto text-center"
+            >
+              Explore Services
+            </a>
           </div>
         </div>
       </section>
 
-      {/* 2. INFINITE LOGO MARQUEE */}
-      <section className="bg-black/40 py-10 border-y border-white/5 relative z-10">
-        <div className="max-w-7xl mx-auto px-6 mb-6">
+      {/* CLIENT LOGO CAROUSEL */}
+      <section className="bg-black/40 py-12 border-y border-white/5 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 mb-8">
           <p className="text-center text-xs font-semibold uppercase tracking-widest text-muted-silver/60">
-            Trusted By Innovative Brands Globally
+            Trusted By Growing Businesses & Brands
           </p>
         </div>
         <div className="w-full overflow-hidden flex relative select-none">
-          <div className="flex animate-marquee gap-16 whitespace-nowrap">
-            {/* First Set of Logos */}
-            {mockLogos.map((logo, idx) => (
+          <div className="flex animate-marquee gap-16 whitespace-nowrap items-center">
+            {clientLogos.map((logo, idx) => (
               <div
                 key={`logo-1-${idx}`}
-                className="flex items-center gap-3 text-muted-silver hover:text-accent-purple-light transition-all duration-300 cursor-pointer group"
+                className="flex-shrink-0 flex items-center justify-center h-16 w-36 px-4 bg-white/2 hover:bg-white/5 border border-white/5 hover:border-accent-purple/35 rounded-xl transition-all duration-300 group"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-8 h-8 fill-none stroke-current stroke-2 group-hover:drop-shadow-[0_0_8px_rgba(168,85,247,0.6)]"
-                >
-                  {logo.path}
-                </svg>
-                <span className="font-syne font-black text-lg tracking-wider">{logo.name}</span>
+                <img
+                  src={logo.path}
+                  alt={`${logo.name} logo`}
+                  className="max-h-12 max-w-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                />
               </div>
             ))}
-            {/* Second Set of Logos (Duplicate to ensure smooth loop) */}
-            {mockLogos.map((logo, idx) => (
+            {clientLogos.map((logo, idx) => (
               <div
                 key={`logo-2-${idx}`}
-                className="flex items-center gap-3 text-muted-silver hover:text-accent-purple-light transition-all duration-300 cursor-pointer group"
+                className="flex-shrink-0 flex items-center justify-center h-16 w-36 px-4 bg-white/2 hover:bg-white/5 border border-white/5 hover:border-accent-purple/35 rounded-xl transition-all duration-300 group"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-8 h-8 fill-none stroke-current stroke-2 group-hover:drop-shadow-[0_0_8px_rgba(168,85,247,0.6)]"
-                >
-                  {logo.path}
-                </svg>
-                <span className="font-syne font-black text-lg tracking-wider">{logo.name}</span>
+                <img
+                  src={logo.path}
+                  alt={`${logo.name} logo`}
+                  className="max-h-12 max-w-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 3. ABOUT TEASER */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-5 space-y-4">
-            <span className="text-xs font-bold uppercase tracking-wider text-accent-purple-light">
-              Agency DNA
-            </span>
+      {/* 2. ABOUT US SECTION */}
+      <section id="about" className="max-w-7xl mx-auto px-6 md:px-12 scroll-mt-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Left Visual Column */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-purple/10 border border-accent-purple/20 text-xs font-semibold text-accent-purple-light uppercase tracking-wider">
+              <Award className="w-3.5 h-3.5" />
+              <span>Who We Are</span>
+            </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
-              Defying The Marketing Gravity.
+              About Us
             </h2>
-            <div className="w-16 h-1 bg-accent-purple rounded-full" />
+            <div className="w-20 h-1 bg-gradient-to-r from-accent-purple to-accent-purple-light rounded-full" />
+            <div className="relative group p-8 rounded-3xl border border-white/5 bg-[#121214]/50 overflow-hidden shadow-2xl">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-accent-purple/5 rounded-bl-full blur-xl pointer-events-none" />
+              <p className="font-syne font-black text-4xl text-white">Adfily</p>
+              <p className="text-xs text-accent-purple-light font-bold uppercase tracking-widest mt-1">Growth Engine</p>
+              <div className="mt-8 space-y-4 text-sm text-muted-silver">
+                <div className="flex items-center gap-3">
+                  <Check className="w-4 h-4 text-accent-purple-light" />
+                  <span>Creativity & Strategy Fusion</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Check className="w-4 h-4 text-accent-purple-light" />
+                  <span>Data-Driven Campaigns</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Check className="w-4 h-4 text-accent-purple-light" />
+                  <span>Sustainable Trajectory</span>
+                </div>
+              </div>
+            </div>
           </div>
-          
-          <div className="lg:col-span-7 space-y-8">
+
+          {/* Right Text Column */}
+          <div className="lg:col-span-7 space-y-6">
             <p className="text-muted-silver text-base md:text-lg leading-relaxed">
-              Traditional marketing is bound by static boundaries. We exist in orbit. Adfily combines creative execution with heavy data analytics, producing high-impact viral content and hyper-targeted paid promotions that keep your brand floating high above the competition.
+              Adfily is a results-driven digital marketing agency dedicated to helping businesses establish a strong online presence and achieve sustainable growth. Our team combines creativity, strategy, and data-driven marketing techniques to create impactful campaigns that connect brands with their ideal audience.
             </p>
-            
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4">
-              <div className="glass-card p-6 rounded-2xl flex flex-col justify-between group">
-                <div className="w-10 h-10 rounded-xl bg-accent-purple/10 flex items-center justify-center text-accent-purple-light mb-4 group-hover:bg-accent-purple group-hover:text-white transition-all duration-300">
-                  <Video className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="block font-syne font-extrabold text-3xl text-white tracking-tight">150M+</span>
-                  <span className="text-xs text-muted-silver uppercase font-semibold tracking-wider">Organic Views</span>
-                </div>
-              </div>
+            <p className="text-muted-silver text-base md:text-lg leading-relaxed">
+              Whether you&apos;re a startup, local business, or growing company, Adfily provides customized digital marketing solutions designed to increase visibility, engagement, and revenue.
+            </p>
 
-              <div className="glass-card p-6 rounded-2xl flex flex-col justify-between group">
-                <div className="w-10 h-10 rounded-xl bg-accent-purple/10 flex items-center justify-center text-accent-purple-light mb-4 group-hover:bg-accent-purple group-hover:text-white transition-all duration-300">
-                  <TrendingUp className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="block font-syne font-extrabold text-3xl text-white tracking-tight">10x</span>
-                  <span className="text-xs text-muted-silver uppercase font-semibold tracking-wider">Average ROI</span>
-                </div>
+            {/* Micro value pillars */}
+            <div className="grid grid-cols-2 gap-4 pt-4">
+              <div className="p-4 rounded-xl border border-white/5 bg-white/2">
+                <span className="block text-white font-bold text-sm mb-1">Visibility</span>
+                <span className="text-xs text-muted-silver">Scale organic search reach & brand impressions.</span>
               </div>
-
-              <div className="glass-card p-6 rounded-2xl flex flex-col justify-between group">
-                <div className="w-10 h-10 rounded-xl bg-accent-purple/10 flex items-center justify-center text-accent-purple-light mb-4 group-hover:bg-accent-purple group-hover:text-white transition-all duration-300">
-                  <Users className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="block font-syne font-extrabold text-3xl text-white tracking-tight">45+</span>
-                  <span className="text-xs text-muted-silver uppercase font-semibold tracking-wider">Roster Creators</span>
-                </div>
+              <div className="p-4 rounded-xl border border-white/5 bg-white/2">
+                <span className="block text-white font-bold text-sm mb-1">Engagement</span>
+                <span className="text-xs text-muted-silver">Build active platforms with viral short-form.</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. FEATURED SERVICES GRID */}
-      <section className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="text-center space-y-4 mb-16">
-          <span className="text-xs font-bold uppercase tracking-wider text-accent-purple-light">
-            Core Pillars
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white">
-            Our Elevation Engines
+      {/* 3. OUR SERVICES SECTION */}
+      <section id="services" className="max-w-7xl mx-auto px-6 md:px-12 scroll-mt-24">
+        {/* Header Block */}
+        <div className="text-center space-y-6 max-w-3xl mx-auto mb-20">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-purple/10 border border-accent-purple/20 text-xs font-semibold text-accent-purple-light uppercase tracking-wider">
+            <span>Our Expertise</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white">
+            OUR SERVICES
           </h2>
-          <p className="text-muted-silver max-w-xl mx-auto text-sm md:text-base">
-            We operate at the intersection of strategy, digital media production, and engineering to scale modern organizations.
+          <p className="text-white text-lg sm:text-xl font-bold bg-gradient-to-r from-accent-purple-light to-white bg-clip-text text-transparent">
+            Digital Marketing Services That Drive Real Business Growth
+          </p>
+          <p className="text-muted-silver text-sm sm:text-base leading-relaxed">
+            At Adfily, we help brands increase visibility, engage their audience, and generate measurable results through innovative digital marketing solutions. From social media management to website development, we provide end-to-end services tailored to your business goals.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Growth & Strategy */}
-          <div className="glass-card p-8 rounded-3xl flex flex-col justify-between relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-accent-purple/10 rounded-bl-full blur-xl group-hover:bg-accent-purple/20 transition-all" />
-            <div className="space-y-6">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-accent-purple to-accent-purple-light flex items-center justify-center text-white shadow-[0_0_15px_rgba(124,58,237,0.3)]">
-                <BarChart3 className="w-6 h-6" />
-              </div>
-              <h3 className="font-syne font-extrabold text-xl text-white">Growth & Strategy</h3>
-              <p className="text-muted-silver text-sm leading-relaxed">
-                Unlock viral expansion using robust SEO algorithms, continuous market analysis, social campaigns, and high-conversion paid media channels.
-              </p>
-              <ul className="space-y-2.5 text-xs text-muted-silver pt-2">
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-accent-purple-light" />
-                  Search Engine Optimization (SEO)
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-accent-purple-light" />
-                  Social Media Strategy
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-accent-purple-light" />
-                  Paid Media Campaigns
-                </li>
-              </ul>
-            </div>
-            <Link
-              href="/services?tab=growth"
-              className="mt-8 inline-flex items-center gap-2 text-xs font-semibold text-accent-purple-light hover:text-white transition-colors group/link"
+        {/* Services Grid (Redesigned as circular cards in Adfily colors) */}
+        <div className="flex flex-wrap justify-center gap-x-12 gap-y-16">
+          {services.map((srv, idx) => (
+            <div
+              key={idx}
+              className="flex flex-col items-center text-center group max-w-sm w-full md:w-[30%] min-w-[280px]"
             >
-              <span>See Growth Blueprint</span>
-              <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-            </Link>
+              {/* Circular gradient container holding the large line-art icon */}
+              <div className="w-44 h-44 rounded-full bg-gradient-to-br from-accent-purple to-accent-purple-light flex items-center justify-center border-2 border-white/10 shadow-[0_0_25px_rgba(124,58,237,0.25)] group-hover:scale-105 group-hover:shadow-[0_0_40px_rgba(168,85,247,0.5)] transition-all duration-500 relative overflow-hidden">
+                <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <div className="text-white w-16 h-16 [&>svg]:w-full [&>svg]:h-full transform group-hover:scale-110 transition-transform duration-300">
+                  {srv.icon}
+                </div>
+              </div>
+
+              {/* Title, description, and list below the circle */}
+              <div className="mt-6 space-y-3">
+                <h3 className="font-syne font-black text-lg sm:text-xl text-white group-hover:text-accent-purple-light transition-colors duration-300">
+                  {`${String(idx + 1).padStart(2, '0')}. ${srv.name}`}
+                </h3>
+                <p className="text-muted-silver text-xs leading-relaxed px-2">
+                  {srv.desc}
+                </p>
+                <div className="pt-2">
+                  <span className="inline-block text-[9px] uppercase font-bold text-accent-purple-light tracking-wider bg-accent-purple/10 border border-accent-purple/20 px-2.5 py-1 rounded-md">
+                    What We Offer:
+                  </span>
+                  <ul className="mt-3 space-y-1 text-[11px] text-muted-silver/80">
+                    {srv.offers.map((off, oIdx) => (
+                      <li key={oIdx} className="flex items-center justify-center gap-1.5">
+                        <Check className="w-3 h-3 text-accent-purple-light flex-shrink-0" />
+                        <span>{off}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 4. WHY CHOOSE ADFILY */}
+      <section id="why-choose-us" className="max-w-7xl mx-auto px-6 md:px-12 scroll-mt-24">
+        {/* Header Block */}
+        <div className="text-center space-y-4 max-w-2xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-purple/10 border border-accent-purple/20 text-xs font-semibold text-accent-purple-light uppercase tracking-wider">
+            <span>Adfily Value</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white">
+            Why Businesses Choose Adfily
+          </h2>
+        </div>
+
+        {/* Benefits Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {whyChooseUs.map((item, idx) => (
+            <div 
+              key={idx} 
+              className="glass-card p-6 rounded-2xl border border-white/5 relative overflow-hidden group hover:border-accent-purple/30"
+            >
+              <div className="absolute -top-6 -right-6 w-16 h-16 bg-accent-purple/10 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="flex items-start gap-3">
+                <div className="w-6 h-6 rounded-full bg-accent-purple/10 flex items-center justify-center flex-shrink-0 mt-0.5 text-accent-purple-light border border-accent-purple/20 font-bold text-sm">
+                  ✓
+                </div>
+                <div>
+                  <h3 className="font-syne font-bold text-white text-sm sm:text-base mb-1.5 leading-snug">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-silver text-xs leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 5. HOW WE WORK */}
+      <section id="how-we-work" className="max-w-6xl mx-auto px-6 md:px-12 scroll-mt-24">
+        {/* Header */}
+        <div className="text-center space-y-4 max-w-2xl mx-auto mb-20">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-purple/10 border border-accent-purple/20 text-xs font-semibold text-accent-purple-light uppercase tracking-wider">
+            <span>Our Process</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white">
+            How We Work
+          </h2>
+        </div>
+
+        {/* Process Timeline */}
+        <div className="relative border-l border-white/10 ml-4 md:ml-8 space-y-12">
+          {howWeWork.map((step, idx) => (
+            <div key={idx} className="relative pl-8 md:pl-12 group">
+              {/* Numbered node badge */}
+              <div className="absolute -left-4 top-0 w-8 h-8 rounded-full bg-gradient-to-r from-accent-purple to-accent-purple-light text-white font-syne font-extrabold text-sm flex items-center justify-center shadow-[0_0_12px_rgba(124,58,237,0.5)] border border-[#0B0B0C] group-hover:scale-110 transition-transform duration-300">
+                {step.step}
+              </div>
+              <div className="space-y-2">
+                <h3 className="font-syne font-extrabold text-xl text-white group-hover:text-accent-purple-light transition-colors duration-200">
+                  {step.title}
+                </h3>
+                <p className="text-muted-silver text-sm max-w-xl leading-relaxed">
+                  {step.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 6. CTA PRE-CONTACT BANNER */}
+      <section className="max-w-5xl mx-auto px-6">
+        <div className="glass-card p-8 md:p-12 rounded-3xl text-center space-y-8 relative overflow-hidden bg-gradient-to-tr from-accent-purple/10 to-transparent">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--accent-purple)/10,transparent)] pointer-events-none" />
+          <div className="max-w-2xl mx-auto space-y-6 relative z-10">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+              Ready To Grow Your Business?
+            </h2>
+            <p className="text-muted-silver text-sm md:text-base">
+              Let&apos;s build a strong digital presence that drives real business results. Book Your Free Consultation Today.
+            </p>
+            <div>
+              <a
+                href="#contact"
+                className="btn-glow inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-accent-purple to-accent-purple-light text-white font-bold rounded-xl text-sm"
+              >
+                <span>Book Your Free Consultation Today</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. CONTACT SECTION */}
+      <section id="contact" className="max-w-7xl mx-auto px-6 md:px-12 scroll-mt-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          {/* Info Column */}
+          <div className="lg:col-span-5 space-y-8">
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-purple/10 border border-accent-purple/20 text-xs font-semibold text-accent-purple-light uppercase tracking-wider">
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>Let&apos;s Talk</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+                Get in touch
+              </h2>
+              <p className="text-muted-silver text-sm md:text-base leading-relaxed">
+                Looking for expert digital marketing services? Get in touch with Adfily and let&apos;s discuss how we can help your business grow online.
+              </p>
+            </div>
+
+            {/* Direct Contact Blocks */}
+            <div className="space-y-4">
+              <a 
+                href="mailto:info@adfily.com"
+                className="flex items-center gap-4 p-4 rounded-2xl border border-white/5 bg-white/2 hover:border-accent-purple/35 transition-colors group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-accent-purple/10 flex items-center justify-center text-accent-purple-light">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="block text-[10px] uppercase font-bold text-muted-silver">Email Us</span>
+                  <span className="text-sm font-semibold text-white group-hover:text-accent-purple-light transition-colors">
+                    info@adfily.com
+                  </span>
+                </div>
+              </a>
+
+              <a 
+                href="tel:+919307967995"
+                className="flex items-center gap-4 p-4 rounded-2xl border border-white/5 bg-white/2 hover:border-accent-purple/35 transition-colors group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-accent-purple/10 flex items-center justify-center text-accent-purple-light">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="block text-[10px] uppercase font-bold text-muted-silver">Call Us</span>
+                  <span className="text-sm font-semibold text-white group-hover:text-accent-purple-light transition-colors">
+                    +91 9307967995
+                  </span>
+                </div>
+              </a>
+
+              <div className="flex items-center gap-4 p-4 rounded-2xl border border-white/5 bg-white/2">
+                <div className="w-10 h-10 rounded-xl bg-accent-purple/10 flex items-center justify-center text-accent-purple-light">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <span className="block text-[10px] uppercase font-bold text-muted-silver">India Address</span>
+                  <span className="text-sm font-semibold text-white leading-relaxed">
+                    Office no.141 Bizzbay Mall, NIBM Undri Road Pune-48
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Social Links Row */}
+            <div className="pt-2">
+              <span className="block text-[10px] uppercase font-bold text-muted-silver mb-3">Connect on Social</span>
+              <div className="flex gap-4">
+                <a 
+                  href="https://www.instagram.com/adfily?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/5 border border-white/10 hover:border-accent-purple-light/50 text-white hover:bg-accent-purple/10 transition-colors"
+                >
+                  Instagram
+                </a>
+                <a 
+                  href="https://www.facebook.com/share/1DsmWfvy3F/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/5 border border-white/10 hover:border-accent-purple-light/50 text-white hover:bg-accent-purple/10 transition-colors"
+                >
+                  Facebook
+                </a>
+                <a 
+                  href="https://www.linkedin.com/company/adfily/about/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/5 border border-white/10 hover:border-accent-purple-light/50 text-white hover:bg-accent-purple/10 transition-colors"
+                >
+                  LinkedIn
+                </a>
+                <a 
+                  href="https://wa.me/919307967995" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="px-4 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-accent-purple to-accent-purple-light text-white transition-opacity hover:opacity-90"
+                >
+                  WhatsApp
+                </a>
+              </div>
+            </div>
           </div>
 
-          {/* Creative & Production */}
-          <div className="glass-card p-8 rounded-3xl flex flex-col justify-between relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-accent-purple/10 rounded-bl-full blur-xl group-hover:bg-accent-purple/20 transition-all" />
-            <div className="space-y-6">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-accent-purple to-accent-purple-light flex items-center justify-center text-white shadow-[0_0_15px_rgba(124,58,237,0.3)]">
-                <Video className="w-6 h-6" />
-              </div>
-              <h3 className="font-syne font-extrabold text-xl text-white">Creative & Production</h3>
-              <p className="text-muted-silver text-sm leading-relaxed">
-                Produce captivating video assets, UGC content library, social graphic assets, and configure high-converting influencer campaigns.
-              </p>
-              <ul className="space-y-2.5 text-xs text-muted-silver pt-2">
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-accent-purple-light" />
-                  Video Shoot & Editing
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-accent-purple-light" />
-                  User Generated Content (UGC)
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-accent-purple-light" />
-                  Influencer Talent Partnerships
-                </li>
-              </ul>
-            </div>
-            <Link
-              href="/services?tab=creative"
-              className="mt-8 inline-flex items-center gap-2 text-xs font-semibold text-accent-purple-light hover:text-white transition-colors group/link"
-            >
-              <span>See Creative Blueprint</span>
-              <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-            </Link>
-          </div>
+          {/* Form Column */}
+          <div className="lg:col-span-7">
+            <div className="glass-card p-6 md:p-8 rounded-3xl border border-white/5">
+              {!isSubmitted ? (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <h3 className="font-syne font-extrabold text-xl text-white">
+                    Request Consultation
+                  </h3>
+                  
+                  {errorMsg && (
+                    <div className="text-xs text-red-400 font-semibold bg-red-400/5 p-3 rounded-xl border border-red-400/10">
+                      {errorMsg}
+                    </div>
+                  )}
 
-          {/* Tech & Innovation */}
-          <div className="glass-card p-8 rounded-3xl flex flex-col justify-between relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-accent-purple/10 rounded-bl-full blur-xl group-hover:bg-accent-purple/20 transition-all" />
-            <div className="space-y-6">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-accent-purple to-accent-purple-light flex items-center justify-center text-white shadow-[0_0_15px_rgba(124,58,237,0.3)]">
-                <Globe className="w-6 h-6" />
-              </div>
-              <h3 className="font-syne font-extrabold text-xl text-white">Tech & Innovation</h3>
-              <p className="text-muted-silver text-sm leading-relaxed">
-                Engineer modern corporate sites, design user experience guidelines (UI/UX), optimize conversion rates, and implement automation.
-              </p>
-              <ul className="space-y-2.5 text-xs text-muted-silver pt-2">
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-accent-purple-light" />
-                  Website Engineering
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-accent-purple-light" />
-                  UI/UX Design Systems
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-accent-purple-light" />
-                  Automation & CRMs setup
-                </li>
-              </ul>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                        Your Name *
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                        placeholder="e.g. John Doe"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                        placeholder="e.g. john@company.com"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                        Contact Number *
+                      </label>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                        placeholder="e.g. +91 9999999999"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                        Business / Company Name
+                      </label>
+                      <input
+                        type="text"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                        placeholder="e.g. Acme Corp"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                      Your Message / Growth Goals *
+                    </label>
+                    <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      className="w-full h-32 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all resize-none"
+                      placeholder="Please let us know how we can help your business grow online..."
+                      required
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full py-3.5 bg-gradient-to-r from-accent-purple to-accent-purple-light text-white font-bold rounded-xl text-xs uppercase tracking-widest shadow-[0_4px_15px_rgba(124,58,237,0.2)] hover:shadow-[0_4px_25px_rgba(124,58,237,0.4)] transition-all duration-300 flex items-center justify-center gap-2"
+                  >
+                    {isSubmitting ? (
+                      <span>Sending Request...</span>
+                    ) : (
+                      <>
+                        <span>Submit Consultation Request</span>
+                        <Send className="w-4 h-4" />
+                      </>
+                    )}
+                  </button>
+                </form>
+              ) : (
+                <div className="py-12 text-center space-y-6 flex flex-col items-center">
+                  <CheckCircle2 className="w-16 h-16 text-accent-purple-light animate-bounce" />
+                  <h3 className="font-syne font-black text-2xl text-white">Consultation Requested!</h3>
+                  <p className="text-muted-silver text-sm max-w-sm leading-relaxed">
+                    Thank you. We have received your inquiry. A digital growth strategist from Adfily will review your profile and connect via email or phone shortly.
+                  </p>
+                  <button
+                    onClick={() => setIsSubmitted(false)}
+                    className="px-6 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs font-semibold hover:bg-white/10 transition-colors"
+                  >
+                    Send Another Request
+                  </button>
+                </div>
+              )}
             </div>
-            <Link
-              href="/services?tab=tech"
-              className="mt-8 inline-flex items-center gap-2 text-xs font-semibold text-accent-purple-light hover:text-white transition-colors group/link"
-            >
-              <span>See Tech Blueprint</span>
-              <ArrowRight className="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-            </Link>
           </div>
         </div>
       </section>

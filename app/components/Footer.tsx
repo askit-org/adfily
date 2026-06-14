@@ -1,6 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -11,76 +9,67 @@ export default function Footer() {
         {/* Branding column */}
         <div className="space-y-4">
           <div className="flex items-center space-x-3">
-            <Image
-              src="/logo.jpeg"
-              alt="Adfily Logo"
-              width={24}
-              height={24}
-              className="rounded-md object-cover"
-            />
             <span className="font-syne font-extrabold tracking-wide uppercase text-white">
               Adfily
             </span>
           </div>
           <p className="text-muted-silver text-sm leading-relaxed max-w-xs">
-            A full-spectrum digital marketing and talent management agency scaling brands through hyper-targeted strategies and disruptive content.
+            At Adfily, we help businesses increase their online visibility, generate quality leads, build brand authority, and drive measurable growth through strategic digital marketing solutions.
           </p>
         </div>
 
-        {/* Services column */}
+        {/* Quick Links column */}
         <div>
           <h4 className="font-syne font-bold text-sm text-white uppercase tracking-wider mb-5">
-            Services
+            Quick Links
           </h4>
           <ul className="space-y-3 text-sm">
             <li>
-              <Link href="/services" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
-                SEO & Content Strategy
-              </Link>
+              <a href="#about" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
+                About Us
+              </a>
             </li>
             <li>
-              <Link href="/services" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
-                Video Shoot & Editing
-              </Link>
+              <a href="#services" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
+                Our Services
+              </a>
             </li>
             <li>
-              <Link href="/services" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
-                UGC & Influencer Marketing
-              </Link>
+              <a href="#why-choose-us" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
+                Why Choose Us
+              </a>
             </li>
             <li>
-              <Link href="/services" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
-                Website Development & UI/UX
-              </Link>
+              <a href="#how-we-work" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
+                How We Work
+              </a>
             </li>
           </ul>
         </div>
 
-        {/* Agency column */}
+        {/* Contact Info column */}
         <div>
           <h4 className="font-syne font-bold text-sm text-white uppercase tracking-wider mb-5">
-            Agency
+            Contact Details
           </h4>
-          <ul className="space-y-3 text-sm">
+          <ul className="space-y-3 text-sm text-muted-silver">
             <li>
-              <Link href="/about" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
-                About Us
-              </Link>
+              <span className="block text-white font-semibold text-xs uppercase">Email Us:</span>
+              <a href="mailto:info@adfily.com" className="hover:text-accent-purple-light transition-colors duration-200">
+                info@adfily.com
+              </a>
             </li>
             <li>
-              <Link href="/careers" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
-                Careers
-              </Link>
+              <span className="block text-white font-semibold text-xs uppercase">Call Us:</span>
+              <a href="tel:+919307967995" className="hover:text-accent-purple-light transition-colors duration-200">
+                +91 9307967995
+              </a>
             </li>
             <li>
-              <Link href="/blog" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
-                Blog Insights
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
-                Contact & Scale
-              </Link>
+              <span className="block text-white font-semibold text-xs uppercase">Address:</span>
+              <span className="leading-relaxed">
+                Office no.141 Bizzbay Mall, NIBM Undri Road Pune-48, India
+              </span>
             </li>
           </ul>
         </div>
@@ -92,23 +81,43 @@ export default function Footer() {
           </h4>
           <ul className="space-y-3 text-sm">
             <li>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
+              <a 
+                href="https://www.instagram.com/adfily?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200"
+              >
                 Instagram
               </a>
             </li>
             <li>
-              <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
-                TikTok
+              <a 
+                href="https://www.facebook.com/share/1DsmWfvy3F/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200"
+              >
+                Facebook
               </a>
             </li>
             <li>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
-                YouTube
-              </a>
-            </li>
-            <li>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200">
+              <a 
+                href="https://www.linkedin.com/company/adfily/about/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-muted-silver hover:text-accent-purple-light transition-colors duration-200"
+              >
                 LinkedIn
+              </a>
+            </li>
+            <li>
+              <a 
+                href="https://wa.me/919307967995" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-accent-purple-light hover:text-white transition-colors duration-200 font-semibold flex items-center gap-1"
+              >
+                WhatsApp Chat
               </a>
             </li>
           </ul>
@@ -116,14 +125,14 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between text-xs text-muted-silver">
-        <span>&copy; {currentYear} Adfily Agency. All rights reserved.</span>
+        <span>&copy; {currentYear} Adfily. All rights reserved.</span>
         <div className="flex space-x-6 mt-4 md:mt-0">
-          <Link href="#" className="hover:text-white transition-colors duration-200">
+          <a href="#" className="hover:text-white transition-colors duration-200">
             Privacy Policy
-          </Link>
-          <Link href="#" className="hover:text-white transition-colors duration-200">
+          </a>
+          <a href="#" className="hover:text-white transition-colors duration-200">
             Terms of Service
-          </Link>
+          </a>
         </div>
       </div>
     </footer>

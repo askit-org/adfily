@@ -24,10 +24,26 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Adfily | Defying Marketing Limitations",
-  description: "A full-spectrum digital marketing, creative production, and talent management agency elevating brands to new heights through hyper-targeted strategies and disruptive content.",
-  keywords: ["digital marketing", "creative agency", "talent management", "UGC production", "SEO optimization", "web development", "social media strategy"],
-  authors: [{ name: "Adfily Agency" }],
+  title:
+    "Adfily | Digital Marketing Agency That Helps Your Business Grow Online",
+  description:
+    "At Adfily, we help businesses increase their online visibility, generate quality leads, build brand authority, and drive measurable growth through strategic digital marketing solutions.",
+  keywords: [
+    "digital marketing",
+    "seo",
+    "social media marketing",
+    "influencer marketing",
+    "content strategy",
+    "video production",
+    "ugc content creation",
+    "website development",
+    "graphic design",
+    "video editing",
+  ],
+  authors: [{ name: "Adfily" }],
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -44,15 +60,13 @@ export default function RootLayout({
         {/* Decorative ambient glowing backdrops */}
         <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-accent-purple/10 rounded-full blur-[120px] pointer-events-none -z-10" />
         <div className="fixed bottom-0 right-1/4 w-[600px] h-[600px] bg-accent-purple-light/5 rounded-full blur-[140px] pointer-events-none -z-10" />
-        
+
         {/* Navigation Navbar */}
         <Navbar />
-        
+
         {/* Main Content Area */}
-        <main className="flex-grow pt-24">
-          {children}
-        </main>
-        
+        <main className="flex-grow pt-24">{children}</main>
+
         {/* Site Footer */}
         <Footer />
       </body>
