@@ -236,13 +236,20 @@ const clientLogos = [
 ];
 
 export default function HomePage() {
-  // Contact Form State
+  // Influencer Form State
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     email: '',
     phone: '',
-    company: '',
-    message: ''
+    city: '',
+    instagramUsername: '',
+    otherSocialLinks: '',
+    totalFollowers: '',
+    nicheCategory: '',
+    avgReelViews: '',
+    prevCollaborations: '',
+    expectedCharges: '',
+    aboutYourself: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -253,21 +260,59 @@ export default function HomePage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.phone || !formData.message) {
+    if (
+      !formData.fullName ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.city ||
+      !formData.instagramUsername ||
+      !formData.totalFollowers ||
+      !formData.nicheCategory ||
+      !formData.avgReelViews ||
+      !formData.expectedCharges ||
+      !formData.aboutYourself
+    ) {
       setErrorMsg('Please fill in all required fields.');
       return;
     }
     setIsSubmitting(true);
     setErrorMsg('');
     
-    // Simulate API request
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to submit. Please try again.');
+      }
+      
       setIsSubmitted(true);
-      setFormData({ name: '', email: '', phone: '', company: '', message: '' });
-    }, 1200);
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        city: '',
+        instagramUsername: '',
+        otherSocialLinks: '',
+        totalFollowers: '',
+        nicheCategory: '',
+        avgReelViews: '',
+        prevCollaborations: '',
+        expectedCharges: '',
+        aboutYourself: ''
+      });
+    } catch (err: any) {
+      setErrorMsg(err.message || 'An unexpected error occurred.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -543,36 +588,278 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. CTA PRE-CONTACT BANNER */}
-      <section className="max-w-5xl mx-auto px-6">
-        <div className="glass-card p-8 md:p-12 rounded-3xl text-center space-y-8 relative overflow-hidden bg-gradient-to-tr from-accent-purple/10 to-transparent">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--accent-purple)/10,transparent)] pointer-events-none" />
-          <div className="max-w-2xl mx-auto space-y-6 relative z-10">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
-              Ready To Grow Your Business?
+
+
+      {/* 6.5 INFLUENCER REGISTRATION SECTION */}
+      <section id="register" className="max-w-5xl mx-auto px-6 scroll-mt-24">
+        <div className="glass-card p-6 md:p-10 rounded-3xl border border-white/5 bg-[#121214]/50 shadow-2xl relative overflow-hidden">
+          {/* Neon background decorations */}
+          <div className="absolute -top-12 -right-12 w-36 h-36 bg-accent-purple-light/10 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute -bottom-12 -left-12 w-44 h-44 bg-accent-purple/10 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="text-center space-y-4 mb-10">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Join Our <span className="bg-gradient-to-r from-accent-purple via-accent-purple-light to-white bg-clip-text text-transparent text-glow">Influencer Network</span>
             </h2>
-            <p className="text-muted-silver text-sm md:text-base">
-              Let&apos;s build a strong digital presence that drives real business results. Book Your Free Consultation Today.
+            <p className="text-muted-silver text-sm max-w-xl mx-auto leading-relaxed">
+              Connect with leading brands, launch exciting campaigns, and monetize your content. Fill out the application details below to get started.
             </p>
-            <div>
-              <a
-                href="#contact"
-                className="btn-glow inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-accent-purple to-accent-purple-light text-white font-bold rounded-xl text-sm"
-              >
-                <span>Book Your Free Consultation Today</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </div>
           </div>
+
+          {!isSubmitted ? (
+            <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
+              {errorMsg && (
+                <div className="text-xs text-red-400 font-semibold bg-red-400/5 p-3 rounded-xl border border-red-400/10">
+                  {errorMsg}
+                </div>
+              )}
+
+              {/* Section: Personal Details */}
+              <div className="space-y-4">
+                <h4 className="text-xs font-extrabold uppercase tracking-widest text-accent-purple-light border-b border-white/5 pb-1">
+                  Personal Details
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                      placeholder="e.g. Jane Doe"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                      placeholder="e.g. jane@example.com"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                      Phone Number *
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                      placeholder="e.g. +91 9876543210"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                      City *
+                    </label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                      placeholder="e.g. Pune"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Section: Social Media Details */}
+              <div className="space-y-4 pt-2">
+                <h4 className="text-xs font-extrabold uppercase tracking-widest text-accent-purple-light border-b border-white/5 pb-1">
+                  Social Media Details
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                      Instagram Username *
+                    </label>
+                    <input
+                      type="text"
+                      name="instagramUsername"
+                      value={formData.instagramUsername}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                      placeholder="e.g. @janedoe"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                      Total Followers *
+                    </label>
+                    <input
+                      type="text"
+                      name="totalFollowers"
+                      value={formData.totalFollowers}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                      placeholder="e.g. 50K"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                    Other Social Media Links (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    name="otherSocialLinks"
+                    value={formData.otherSocialLinks}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                    placeholder="e.g. YouTube, TikTok, or LinkedIn links"
+                  />
+                </div>
+              </div>
+
+              {/* Section: Content Information */}
+              <div className="space-y-4 pt-2">
+                <h4 className="text-xs font-extrabold uppercase tracking-widest text-accent-purple-light border-b border-white/5 pb-1">
+                  Content Information
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                      Niche / Category *
+                    </label>
+                    <input
+                      type="text"
+                      name="nicheCategory"
+                      value={formData.nicheCategory}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                      placeholder="e.g. Fashion, Tech, Travel"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                      Average Reel Views *
+                    </label>
+                    <input
+                      type="text"
+                      name="avgReelViews"
+                      value={formData.avgReelViews}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                      placeholder="e.g. 25K"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                    Previous Brand Collaborations (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    name="prevCollaborations"
+                    value={formData.prevCollaborations}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                    placeholder="e.g. Brand A, Brand B, Brand C"
+                  />
+                </div>
+              </div>
+
+              {/* Section: Collaboration & Extra */}
+              <div className="space-y-4 pt-2">
+                <h4 className="text-xs font-extrabold uppercase tracking-widest text-accent-purple-light border-b border-white/5 pb-1">
+                  Collaboration Details
+                </h4>
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                    Expected Charges per Reel/Post *
+                  </label>
+                  <input
+                    type="text"
+                    name="expectedCharges"
+                    value={formData.expectedCharges}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                    placeholder="e.g. ₹5,000 / $100"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-4 pt-2">
+                <h4 className="text-xs font-extrabold uppercase tracking-widest text-accent-purple-light border-b border-white/5 pb-1">
+                  Additional Information
+                </h4>
+                <div>
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
+                    Tell Us About Yourself *
+                  </label>
+                  <textarea
+                    name="aboutYourself"
+                    value={formData.aboutYourself}
+                    onChange={handleChange}
+                    className="w-full h-32 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all resize-none"
+                    placeholder="Share your content creation journey, style, and what makes your audience unique..."
+                    required
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full py-4 bg-gradient-to-r from-accent-purple to-accent-purple-light text-white font-extrabold rounded-xl text-xs uppercase tracking-widest shadow-[0_4px_15px_rgba(124,58,237,0.2)] hover:shadow-[0_4px_25px_rgba(124,58,237,0.4)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+              >
+                {isSubmitting ? (
+                  <span>Submitting...</span>
+                ) : (
+                  <>
+                    <span>🚀 Join Our Influencer Network</span>
+                  </>
+                )}
+              </button>
+            </form>
+          ) : (
+            <div className="py-12 text-center space-y-6 flex flex-col items-center">
+              <CheckCircle2 className="w-16 h-16 text-accent-purple-light animate-bounce" />
+              <h3 className="font-syne font-black text-2xl text-white">Application Received!</h3>
+              <p className="text-muted-silver text-sm max-w-sm leading-relaxed">
+                Thank you for joining our network. We have received your registration details. Our team will review your social media profile and reach out to you soon!
+              </p>
+              <button
+                onClick={() => setIsSubmitted(false)}
+                className="px-6 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs font-semibold hover:bg-white/10 transition-colors cursor-pointer"
+              >
+                Register Another Account
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
       {/* 7. CONTACT SECTION */}
-      <section id="contact" className="max-w-7xl mx-auto px-6 md:px-12 scroll-mt-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Info Column */}
-          <div className="lg:col-span-5 space-y-8">
-            <div className="space-y-4">
+      <section id="contact" className="max-w-5xl mx-auto px-6 md:px-12 scroll-mt-24">
+        <div className="glass-card p-8 md:p-12 rounded-3xl border border-white/5 bg-[#121214]/50 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-44 h-44 bg-accent-purple/5 rounded-bl-full blur-xl pointer-events-none" />
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+            {/* Title & Description */}
+            <div className="md:col-span-5 space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-purple/10 border border-accent-purple/20 text-xs font-semibold text-accent-purple-light uppercase tracking-wider">
                 <MessageSquare className="w-3.5 h-3.5" />
                 <span>Let&apos;s Talk</span>
@@ -580,42 +867,44 @@ export default function HomePage() {
               <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
                 Get in touch
               </h2>
-              <p className="text-muted-silver text-sm md:text-base leading-relaxed">
+              <p className="text-muted-silver text-sm leading-relaxed">
                 Looking for expert digital marketing services? Get in touch with Adfily and let&apos;s discuss how we can help your business grow online.
               </p>
             </div>
 
-            {/* Direct Contact Blocks */}
-            <div className="space-y-4">
-              <a 
-                href="mailto:info@adfily.com"
-                className="flex items-center gap-4 p-4 rounded-2xl border border-white/5 bg-white/2 hover:border-accent-purple/35 transition-colors group"
-              >
-                <div className="w-10 h-10 rounded-xl bg-accent-purple/10 flex items-center justify-center text-accent-purple-light">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="block text-[10px] uppercase font-bold text-muted-silver">Email Us</span>
-                  <span className="text-sm font-semibold text-white group-hover:text-accent-purple-light transition-colors">
-                    info@adfily.com
-                  </span>
-                </div>
-              </a>
+            {/* Direct Contact Blocks & Socials */}
+            <div className="md:col-span-7 space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <a 
+                  href="mailto:info@adfily.com"
+                  className="flex items-center gap-4 p-4 rounded-2xl border border-white/5 bg-white/2 hover:border-accent-purple/35 transition-colors group"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-accent-purple/10 flex items-center justify-center text-accent-purple-light">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] uppercase font-bold text-muted-silver">Email Us</span>
+                    <span className="text-sm font-semibold text-white group-hover:text-accent-purple-light transition-colors">
+                      info@adfily.com
+                    </span>
+                  </div>
+                </a>
 
-              <a 
-                href="tel:+919307967995"
-                className="flex items-center gap-4 p-4 rounded-2xl border border-white/5 bg-white/2 hover:border-accent-purple/35 transition-colors group"
-              >
-                <div className="w-10 h-10 rounded-xl bg-accent-purple/10 flex items-center justify-center text-accent-purple-light">
-                  <Phone className="w-5 h-5" />
-                </div>
-                <div>
-                  <span className="block text-[10px] uppercase font-bold text-muted-silver">Call Us</span>
-                  <span className="text-sm font-semibold text-white group-hover:text-accent-purple-light transition-colors">
-                    +91 9307967995
-                  </span>
-                </div>
-              </a>
+                <a 
+                  href="tel:+919307967995"
+                  className="flex items-center gap-4 p-4 rounded-2xl border border-white/5 bg-white/2 hover:border-accent-purple/35 transition-colors group"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-accent-purple/10 flex items-center justify-center text-accent-purple-light">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] uppercase font-bold text-muted-silver">Call Us</span>
+                    <span className="text-sm font-semibold text-white group-hover:text-accent-purple-light transition-colors">
+                      +91 9307967995
+                    </span>
+                  </div>
+                </a>
+              </div>
 
               <div className="flex items-center gap-4 p-4 rounded-2xl border border-white/5 bg-white/2">
                 <div className="w-10 h-10 rounded-xl bg-accent-purple/10 flex items-center justify-center text-accent-purple-light">
@@ -628,168 +917,37 @@ export default function HomePage() {
                   </span>
                 </div>
               </div>
-            </div>
 
-            {/* Social Links Row */}
-            <div className="pt-2">
-              <span className="block text-[10px] uppercase font-bold text-muted-silver mb-3">Connect on Social</span>
-              <div className="flex gap-4">
-                <a 
-                  href="https://www.instagram.com/adfily?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/5 border border-white/10 hover:border-accent-purple-light/50 text-white hover:bg-accent-purple/10 transition-colors"
-                >
-                  Instagram
-                </a>
-                <a 
-                  href="https://www.facebook.com/share/1DsmWfvy3F/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/5 border border-white/10 hover:border-accent-purple-light/50 text-white hover:bg-accent-purple/10 transition-colors"
-                >
-                  Facebook
-                </a>
-                <a 
-                  href="https://www.linkedin.com/company/adfily/about/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/5 border border-white/10 hover:border-accent-purple-light/50 text-white hover:bg-accent-purple/10 transition-colors"
-                >
-                  LinkedIn
-                </a>
-                <a 
-                  href="https://wa.me/919307967995" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="px-4 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-accent-purple to-accent-purple-light text-white transition-opacity hover:opacity-90"
-                >
-                  WhatsApp
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Form Column */}
-          <div className="lg:col-span-7">
-            <div className="glass-card p-6 md:p-8 rounded-3xl border border-white/5">
-              {!isSubmitted ? (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <h3 className="font-syne font-extrabold text-xl text-white">
-                    Request Consultation
-                  </h3>
-                  
-                  {errorMsg && (
-                    <div className="text-xs text-red-400 font-semibold bg-red-400/5 p-3 rounded-xl border border-red-400/10">
-                      {errorMsg}
-                    </div>
-                  )}
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                        Your Name *
-                      </label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
-                        placeholder="e.g. John Doe"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
-                        placeholder="e.g. john@company.com"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                        Contact Number *
-                      </label>
-                      <input
-                        type="tel"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
-                        placeholder="e.g. +91 9999999999"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                        Business / Company Name
-                      </label>
-                      <input
-                        type="text"
-                        name="company"
-                        value={formData.company}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
-                        placeholder="e.g. Acme Corp"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                      Your Message / Growth Goals *
-                    </label>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      className="w-full h-32 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all resize-none"
-                      placeholder="Please let us know how we can help your business grow online..."
-                      required
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full py-3.5 bg-gradient-to-r from-accent-purple to-accent-purple-light text-white font-bold rounded-xl text-xs uppercase tracking-widest shadow-[0_4px_15px_rgba(124,58,237,0.2)] hover:shadow-[0_4px_25px_rgba(124,58,237,0.4)] transition-all duration-300 flex items-center justify-center gap-2"
+              {/* Social Links Row */}
+              <div className="pt-2">
+                <span className="block text-[10px] uppercase font-bold text-muted-silver mb-3">Connect on Social</span>
+                <div className="flex gap-4">
+                  <a 
+                    href="https://www.instagram.com/adfily?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/5 border border-white/10 hover:border-accent-purple-light/50 text-white hover:bg-accent-purple/10 transition-colors"
                   >
-                    {isSubmitting ? (
-                      <span>Sending Request...</span>
-                    ) : (
-                      <>
-                        <span>Submit Consultation Request</span>
-                        <Send className="w-4 h-4" />
-                      </>
-                    )}
-                  </button>
-                </form>
-              ) : (
-                <div className="py-12 text-center space-y-6 flex flex-col items-center">
-                  <CheckCircle2 className="w-16 h-16 text-accent-purple-light animate-bounce" />
-                  <h3 className="font-syne font-black text-2xl text-white">Consultation Requested!</h3>
-                  <p className="text-muted-silver text-sm max-w-sm leading-relaxed">
-                    Thank you. We have received your inquiry. A digital growth strategist from Adfily will review your profile and connect via email or phone shortly.
-                  </p>
-                  <button
-                    onClick={() => setIsSubmitted(false)}
-                    className="px-6 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs font-semibold hover:bg-white/10 transition-colors"
+                    Instagram
+                  </a>
+                  <a 
+                    href="https://www.facebook.com/share/1DsmWfvy3F/" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/5 border border-white/10 hover:border-accent-purple-light/50 text-white hover:bg-accent-purple/10 transition-colors"
                   >
-                    Send Another Request
-                  </button>
+                    Facebook
+                  </a>
+                  <a 
+                    href="https://www.linkedin.com/company/adfily/about/" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/5 border border-white/10 hover:border-accent-purple-light/50 text-white hover:bg-accent-purple/10 transition-colors"
+                  >
+                    LinkedIn
+                  </a>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
