@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { 
-  Lock, 
-  Mail, 
-  KeyRound, 
-  Download, 
-  LogOut, 
-  ArrowLeft, 
-  Users, 
-  Calendar, 
-  Briefcase, 
-  DollarSign, 
-  Phone, 
+import React, { useState, useEffect } from "react";
+import {
+  Lock,
+  Mail,
+  KeyRound,
+  Download,
+  LogOut,
+  ArrowLeft,
+  Users,
+  Calendar,
+  Briefcase,
+  DollarSign,
+  Phone,
   MapPin,
   Sparkles,
-  Loader2
-} from 'lucide-react';
-import * as XLSX from 'xlsx';
+  Loader2,
+} from "lucide-react";
+import * as XLSX from "xlsx";
 
 const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -39,28 +39,30 @@ const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function AdminPage() {
-  const [phase, setPhase] = useState<'checking' | 'email' | 'otp' | 'dashboard'>('checking');
-  const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState('');
+  const [phase, setPhase] = useState<
+    "checking" | "email" | "otp" | "dashboard"
+  >("checking");
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
   const [leads, setLeads] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
 
   // Check if session is already active on mount
   useEffect(() => {
     async function checkSession() {
       try {
-        const res = await fetch('/api/admin/leads');
+        const res = await fetch("/api/admin/leads");
         if (res.ok) {
           const data = await res.json();
           setLeads(data.leads || []);
-          setPhase('dashboard');
+          setPhase("dashboard");
         } else {
-          setPhase('email');
+          setPhase("email");
         }
       } catch (err) {
-        setPhase('email');
+        setPhase("email");
       }
     }
     checkSession();
@@ -68,31 +70,33 @@ export default function AdminPage() {
 
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMsg('');
-    setSuccessMsg('');
+    setErrorMsg("");
+    setSuccessMsg("");
 
-    if (email.trim() !== 'adfilyofficial@gmail.com') {
-      setErrorMsg('Access denied: Unauthorized email address.');
+    if (email.trim() !== "adfilyofficial@gmail.com") {
+      setErrorMsg("Access denied: Unauthorized email address.");
       return;
     }
 
     setLoading(true);
     try {
-      const res = await fetch('/api/admin/otp/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/admin/otp/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim() }),
       });
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || 'Failed to send OTP.');
+        throw new Error(data.error || "Failed to send OTP.");
       }
 
-      setSuccessMsg(data.message || 'OTP sent successfully.');
-      setPhase('otp');
+      setSuccessMsg(data.message || "OTP sent successfully.");
+      setPhase("otp");
     } catch (err: any) {
-      setErrorMsg(err.message || 'Error occurred while sending verification code.');
+      setErrorMsg(
+        err.message || "Error occurred while sending verification code.",
+      );
     } finally {
       setLoading(false);
     }
@@ -100,37 +104,37 @@ export default function AdminPage() {
 
   const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMsg('');
-    setSuccessMsg('');
+    setErrorMsg("");
+    setSuccessMsg("");
 
     if (!otp.trim()) {
-      setErrorMsg('Please enter the verification OTP.');
+      setErrorMsg("Please enter the verification OTP.");
       return;
     }
 
     setLoading(true);
     try {
-      const res = await fetch('/api/admin/otp/verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/admin/otp/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: email.trim(), otp: otp.trim() }),
       });
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || 'Invalid OTP verification.');
+        throw new Error(data.error || "Invalid OTP verification.");
       }
 
       // If OTP verified, fetch leads
-      const leadsRes = await fetch('/api/admin/leads');
+      const leadsRes = await fetch("/api/admin/leads");
       if (!leadsRes.ok) {
-        throw new Error('Failed to retrieve registrations.');
+        throw new Error("Failed to retrieve registrations.");
       }
       const leadsData = await leadsRes.json();
       setLeads(leadsData.leads || []);
-      setPhase('dashboard');
+      setPhase("dashboard");
     } catch (err: any) {
-      setErrorMsg(err.message || 'OTP verification failed.');
+      setErrorMsg(err.message || "OTP verification failed.");
     } finally {
       setLoading(false);
     }
@@ -139,15 +143,15 @@ export default function AdminPage() {
   const handleLogout = async () => {
     setLoading(true);
     try {
-      await fetch('/api/admin/logout', { method: 'POST' });
+      await fetch("/api/admin/logout", { method: "POST" });
       setLeads([]);
-      setOtp('');
-      setEmail('');
-      setPhase('email');
-      setErrorMsg('');
-      setSuccessMsg('');
+      setOtp("");
+      setEmail("");
+      setPhase("email");
+      setErrorMsg("");
+      setSuccessMsg("");
     } catch (err) {
-      console.error('Logout error:', err);
+      console.error("Logout error:", err);
     } finally {
       setLoading(false);
     }
@@ -158,30 +162,30 @@ export default function AdminPage() {
 
     // Compile into formatted objects for worksheet
     const dataToExport = leads.map((lead, idx) => ({
-      'S.No.': idx + 1,
-      'Registration Date': new Date(lead.created_at).toLocaleString(),
-      'Full Name': lead.full_name,
-      'Email Address': lead.email,
-      'Phone Number': lead.phone,
-      'City': lead.city,
-      'Instagram Username': lead.instagram_username,
-      'Total Followers': lead.total_followers,
-      'Other Social Media': lead.other_social_links || 'N/A',
-      'Niche / Category': lead.niche_category,
-      'Average Reel Views': lead.avg_reel_views,
-      'Previous Brands': lead.prev_collaborations || 'None',
-      'Expected Charges per Reel/Post': lead.expected_charges,
-      'About Details': lead.about_yourself,
+      "S.No.": idx + 1,
+      "Registration Date": new Date(lead.created_at).toLocaleString(),
+      "Full Name": lead.full_name,
+      "Email Address": lead.email,
+      "Phone Number": lead.phone,
+      City: lead.city,
+      "Instagram Username": lead.instagram_username,
+      "Total Followers": lead.total_followers,
+      "Other Social Media": lead.other_social_links || "N/A",
+      "Niche / Category": lead.niche_category,
+      "Average Reel Views": lead.avg_reel_views,
+      "Previous Brands": lead.prev_collaborations || "None",
+      "Expected Charges per Reel/Post": lead.expected_charges,
+      "About Details": lead.about_yourself,
     }));
 
     // Create Excel Workbook
     const worksheet = XLSX.utils.json_to_sheet(dataToExport);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Influencer Leads');
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Influencer Leads");
 
     // Make column widths fit nicely
     const max_len = 15;
-    worksheet['!cols'] = [
+    worksheet["!cols"] = [
       { wch: 6 },
       { wch: 20 },
       { wch: 22 },
@@ -198,11 +202,11 @@ export default function AdminPage() {
       { wch: 45 },
     ];
 
-    const todayStr = new Date().toISOString().split('T')[0];
+    const todayStr = new Date().toISOString().split("T")[0];
     XLSX.writeFile(workbook, `Adfily_Influencer_Leads_${todayStr}.xlsx`);
   };
 
-  if (phase === 'checking') {
+  if (phase === "checking") {
     return (
       <div className="min-h-[75vh] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
@@ -220,7 +224,7 @@ export default function AdminPage() {
       {/* Background glow decorator */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-accent-purple/10 rounded-full blur-[100px] pointer-events-none -z-10" />
 
-      {phase === 'email' && (
+      {phase === "email" && (
         <div className="min-h-[60vh] flex items-center justify-center">
           <div className="glass-card p-8 sm:p-10 rounded-3xl border border-white/5 max-w-md w-full space-y-6">
             <div className="flex flex-col items-center text-center space-y-2">
@@ -231,7 +235,8 @@ export default function AdminPage() {
                 Admin Authentication
               </h2>
               <p className="text-xs text-muted-silver leading-relaxed">
-                Authorized entry to the Adfily Influencer Network Lead Records dashboard.
+                Authorized entry to the Adfily Influencer Network Lead Records
+                dashboard.
               </p>
             </div>
 
@@ -255,7 +260,7 @@ export default function AdminPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
-                    placeholder="e.g. adfilyofficial@gmail.com"
+                    placeholder="e.g. john@gmail.com"
                     required
                   />
                 </div>
@@ -280,11 +285,11 @@ export default function AdminPage() {
         </div>
       )}
 
-      {phase === 'otp' && (
+      {phase === "otp" && (
         <div className="min-h-[60vh] flex items-center justify-center">
           <div className="glass-card p-8 sm:p-10 rounded-3xl border border-white/5 max-w-md w-full space-y-6">
             <button
-              onClick={() => setPhase('email')}
+              onClick={() => setPhase("email")}
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-silver hover:text-white transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
@@ -299,7 +304,8 @@ export default function AdminPage() {
                 Verify OTP
               </h2>
               <p className="text-xs text-muted-silver leading-relaxed">
-                A 6-digit verification code has been dispatched to <strong>{email}</strong>. Please enter the OTP to log in.
+                A 6-digit verification code has been dispatched to{" "}
+                <strong>{email}</strong>. Please enter the OTP to log in.
               </p>
             </div>
 
@@ -349,7 +355,7 @@ export default function AdminPage() {
         </div>
       )}
 
-      {phase === 'dashboard' && (
+      {phase === "dashboard" && (
         <div className="space-y-8 animate-fade-in-up">
           {/* Header Dashboard section */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/5 pb-6">
@@ -362,7 +368,8 @@ export default function AdminPage() {
                 Influencer Leads
               </h1>
               <p className="text-xs sm:text-sm text-muted-silver">
-                Total registrations: <strong>{leads.length}</strong> profiles saved.
+                Total registrations: <strong>{leads.length}</strong> profiles
+                saved.
               </p>
             </div>
 
@@ -393,7 +400,8 @@ export default function AdminPage() {
                 No Leads Found
               </h3>
               <p className="text-sm text-muted-silver max-w-sm">
-                No influencers have registered through the application form yet. Records will compile here as they join.
+                No influencers have registered through the application form yet.
+                Records will compile here as they join.
               </p>
             </div>
           ) : (
@@ -406,13 +414,20 @@ export default function AdminPage() {
                       <th className="py-4 px-5 font-bold">Social Media Info</th>
                       <th className="py-4 px-5 font-bold">Content Info</th>
                       <th className="py-4 px-5 font-bold">Charges</th>
-                      <th className="py-4 px-5 font-bold">About Himself/Herself</th>
-                      <th className="py-4 px-5 font-bold text-right">Date Joined</th>
+                      <th className="py-4 px-5 font-bold">
+                        About Himself/Herself
+                      </th>
+                      <th className="py-4 px-5 font-bold text-right">
+                        Date Joined
+                      </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5 text-white">
                     {leads.map((lead) => (
-                      <tr key={lead.id} className="hover:bg-white/2 transition-colors">
+                      <tr
+                        key={lead.id}
+                        className="hover:bg-white/2 transition-colors"
+                      >
                         {/* Name & Contact Info */}
                         <td className="py-4 px-5 space-y-1.5 max-w-[200px]">
                           <span className="block font-bold text-sm text-accent-purple-light truncate">
@@ -420,13 +435,19 @@ export default function AdminPage() {
                           </span>
                           <div className="flex items-center gap-1.5 text-muted-silver">
                             <Mail className="w-3.5 h-3.5 flex-shrink-0" />
-                            <a href={`mailto:${lead.email}`} className="hover:underline truncate">
+                            <a
+                              href={`mailto:${lead.email}`}
+                              className="hover:underline truncate"
+                            >
                               {lead.email}
                             </a>
                           </div>
                           <div className="flex items-center gap-1.5 text-muted-silver">
                             <Phone className="w-3.5 h-3.5 flex-shrink-0" />
-                            <a href={`tel:${lead.phone}`} className="hover:underline">
+                            <a
+                              href={`tel:${lead.phone}`}
+                              className="hover:underline"
+                            >
                               {lead.phone}
                             </a>
                           </div>
@@ -440,8 +461,8 @@ export default function AdminPage() {
                         <td className="py-4 px-5 space-y-1.5">
                           <div className="flex items-center gap-1.5">
                             <InstagramIcon className="w-3.5 h-3.5 text-pink-400" />
-                            <a 
-                              href={`https://instagram.com/${lead.instagram_username.replace('@', '')}`}
+                            <a
+                              href={`https://instagram.com/${lead.instagram_username.replace("@", "")}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="font-semibold hover:underline"
@@ -450,10 +471,16 @@ export default function AdminPage() {
                             </a>
                           </div>
                           <div className="text-muted-silver">
-                            Followers: <strong className="text-white">{lead.total_followers}</strong>
+                            Followers:{" "}
+                            <strong className="text-white">
+                              {lead.total_followers}
+                            </strong>
                           </div>
                           {lead.other_social_links && (
-                            <div className="text-[10px] text-muted-silver truncate max-w-[180px]" title={lead.other_social_links}>
+                            <div
+                              className="text-[10px] text-muted-silver truncate max-w-[180px]"
+                              title={lead.other_social_links}
+                            >
                               Other: {lead.other_social_links}
                             </div>
                           )}
@@ -462,13 +489,22 @@ export default function AdminPage() {
                         {/* Content metrics */}
                         <td className="py-4 px-5 space-y-1.5">
                           <div>
-                            Niche: <strong className="text-accent-purple-light">{lead.niche_category}</strong>
+                            Niche:{" "}
+                            <strong className="text-accent-purple-light">
+                              {lead.niche_category}
+                            </strong>
                           </div>
                           <div className="text-muted-silver">
-                            Reel Views: <strong className="text-white">{lead.avg_reel_views}</strong>
+                            Reel Views:{" "}
+                            <strong className="text-white">
+                              {lead.avg_reel_views}
+                            </strong>
                           </div>
                           {lead.prev_collaborations && (
-                            <div className="text-[10px] text-muted-silver truncate max-w-[180px]" title={lead.prev_collaborations}>
+                            <div
+                              className="text-[10px] text-muted-silver truncate max-w-[180px]"
+                              title={lead.prev_collaborations}
+                            >
                               Collabs: {lead.prev_collaborations}
                             </div>
                           )}
@@ -484,7 +520,10 @@ export default function AdminPage() {
 
                         {/* Self bio summary */}
                         <td className="py-4 px-5 max-w-[250px]">
-                          <p className="text-muted-silver line-clamp-3 leading-relaxed" title={lead.about_yourself}>
+                          <p
+                            className="text-muted-silver line-clamp-3 leading-relaxed"
+                            title={lead.about_yourself}
+                          >
                             {lead.about_yourself}
                           </p>
                         </td>
@@ -493,10 +532,15 @@ export default function AdminPage() {
                         <td className="py-4 px-5 text-right text-muted-silver font-mono max-w-[120px]">
                           <div className="flex items-center justify-end gap-1">
                             <Calendar className="w-3 h-3" />
-                            <span>{new Date(lead.created_at).toLocaleDateString()}</span>
+                            <span>
+                              {new Date(lead.created_at).toLocaleDateString()}
+                            </span>
                           </div>
                           <div className="text-[10px] opacity-70">
-                            {new Date(lead.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            {new Date(lead.created_at).toLocaleTimeString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
                           </div>
                         </td>
                       </tr>

@@ -588,29 +588,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. CTA PRE-CONTACT BANNER */}
-      <section className="max-w-5xl mx-auto px-6">
-        <div className="glass-card p-8 md:p-12 rounded-3xl text-center space-y-8 relative overflow-hidden bg-gradient-to-tr from-accent-purple/10 to-transparent">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--accent-purple)/10,transparent)] pointer-events-none" />
-          <div className="max-w-2xl mx-auto space-y-6 relative z-10">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
-              Ready To Grow Your Business?
-            </h2>
-            <p className="text-muted-silver text-sm md:text-base">
-              Let&apos;s build a strong digital presence that drives real business results. Book Your Free Consultation Today.
-            </p>
-            <div>
-              <a
-                href="#contact"
-                className="btn-glow inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-accent-purple to-accent-purple-light text-white font-bold rounded-xl text-sm"
-              >
-                <span>Book Your Free Consultation Today</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* 6.5 INFLUENCER REGISTRATION SECTION */}
       <section id="register" className="max-w-5xl mx-auto px-6 scroll-mt-24">
