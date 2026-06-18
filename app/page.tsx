@@ -711,6 +711,10 @@ export default function HomePage() {
         </div>
 
         {/* Mobile View: Scrollable Cards from Right to Left */}
+        <div className="lg:hidden flex items-center justify-center gap-2 text-[10px] font-black text-accent-primary uppercase tracking-widest mb-6 select-none animate-pulse">
+          <span>Swipe to explore all services</span>
+          <ArrowRight className="w-3.5 h-3.5 animate-bounce-horizontal" />
+        </div>
         <div className="lg:hidden flex overflow-x-auto gap-6 pb-8 px-4 -mx-4 snap-x snap-mandatory scrollbar-none scroll-smooth">
           {services.map((srv, idx) => (
             <div

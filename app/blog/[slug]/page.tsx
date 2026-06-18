@@ -18,7 +18,7 @@ export default async function BlogPostPage(props: {
   }
 
   return (
-    <article className="max-w-4xl mx-auto px-6 md:px-12 pt-8 pb-16 space-y-8 animate-fade-in-up">
+    <article className="max-w-4xl mx-auto px-6 md:px-12 pt-36 pb-16 space-y-8 animate-fade-in-up">
       {/* Return Navigation */}
       <div>
         <Link
