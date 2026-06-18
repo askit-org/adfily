@@ -350,7 +350,7 @@ export default function HomePage() {
       {/* 1. HERO SECTION */}
       <section
         id="home"
-        className="relative min-h-[90vh] flex items-center justify-center px-6 md:px-12 pt-8"
+        className="relative min-h-[90vh] flex items-center justify-center px-6 md:px-12 pt-8 scroll-mt-28"
       >
         {/* Glow backdrop decorative */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-accent-purple/15 rounded-full blur-[120px] pointer-events-none -z-10" />
@@ -398,35 +398,35 @@ export default function HomePage() {
       </section>
 
       {/* CLIENT LOGO CAROUSEL */}
-      <section className="bg-gradient-to-br from-accent-primary/5 via-white/60 to-accent-secondary/3 py-12 border-y border-accent-primary/25 relative z-10">
-        <div className="max-w-7xl mx-auto px-6 mb-8">
+      <section className="bg-gradient-to-br from-accent-primary/5 via-white/60 to-accent-secondary/3 py-8 border-y border-accent-primary/25 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 mb-4">
           <p className="text-center text-xs font-semibold uppercase tracking-widest text-muted-silver/60">
             Trusted By Growing Businesses & Brands
           </p>
         </div>
-        <div className="w-full overflow-hidden flex relative select-none">
+        <div className="w-full overflow-hidden flex relative select-none py-6">
           <div className="flex animate-marquee gap-16 whitespace-nowrap items-center">
             {clientLogos.map((logo, idx) => (
               <div
                 key={`logo-1-${idx}`}
-                className="flex-shrink-0 flex items-center justify-center h-16 w-36 px-4 bg-gradient-to-br from-accent-primary/5 via-white/60 to-accent-secondary/3 hover:bg-slate-50 border border-accent-primary/25 hover:border-accent-secondary/35 rounded-xl transition-all duration-300 group"
+                className="flex-shrink-0 flex items-center justify-center h-16 w-36 px-4 bg-gradient-to-br from-accent-primary/5 via-white/80 to-accent-secondary/5 border border-accent-primary/20 hover:border-accent-primary/50 rounded-xl transition-all duration-300 ease-out hover:scale-120 hover:-translate-y-2 hover:shadow-[0_12px_24px_rgba(235,37,106,0.15)] relative hover:z-20 group"
               >
                 <img
                   src={logo.path}
                   alt={`${logo.name} logo`}
-                  className="max-h-12 max-w-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                  className="max-h-12 max-w-full object-contain transition-transform duration-300 ease-out group-hover:scale-105"
                 />
               </div>
             ))}
             {clientLogos.map((logo, idx) => (
               <div
                 key={`logo-2-${idx}`}
-                className="flex-shrink-0 flex items-center justify-center h-16 w-36 px-4 bg-gradient-to-br from-accent-primary/5 via-white/60 to-accent-secondary/3 hover:bg-slate-50 border border-accent-primary/25 hover:border-accent-secondary/35 rounded-xl transition-all duration-300 group"
+                className="flex-shrink-0 flex items-center justify-center h-16 w-36 px-4 bg-gradient-to-br from-accent-primary/5 via-white/80 to-accent-secondary/5 border border-accent-primary/20 hover:border-accent-primary/50 rounded-xl transition-all duration-300 ease-out hover:scale-120 hover:-translate-y-2 hover:shadow-[0_12px_24px_rgba(235,37,106,0.15)] relative hover:z-20 group"
               >
                 <img
                   src={logo.path}
                   alt={`${logo.name} logo`}
-                  className="max-h-12 max-w-full object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                  className="max-h-12 max-w-full object-contain transition-transform duration-300 ease-out group-hover:scale-105"
                 />
               </div>
             ))}
@@ -531,12 +531,13 @@ export default function HomePage() {
           </p>
           <p className="text-muted-silver text-sm sm:text-base leading-relaxed">
             At Adfily, we help brands increase visibility, engage their
-            audience, and generate measurable results. Explore our core service verticals below.
+            audience, and generate measurable results. Explore our core service
+            verticals below.
           </p>
         </div>
 
-        {/* Dynamic Interactive Panel Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        {/* Desktop View: Dynamic Interactive Panel Layout */}
+        <div className="hidden lg:grid grid-cols-12 gap-8 items-stretch">
           {/* Left Columns - Interactive Service Tabs */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             {/* Core Specialties (Featured Services) */}
@@ -615,9 +616,12 @@ export default function HomePage() {
                               : "bg-accent-primary/5 border-accent-primary/10 text-accent-secondary"
                           }`}
                         >
-                          {React.cloneElement(srv.icon as React.ReactElement<any>, {
-                            className: "w-3.5 h-3.5",
-                          })}
+                          {React.cloneElement(
+                            srv.icon as React.ReactElement<any>,
+                            {
+                              className: "w-3.5 h-3.5",
+                            },
+                          )}
                         </div>
                         <span className="font-syne font-bold text-xs truncate">
                           {srv.name}
@@ -634,7 +638,7 @@ export default function HomePage() {
             <div className="w-full glass-card p-8 sm:p-10 rounded-3xl border border-accent-primary/20 bg-gradient-to-br from-white/80 via-white/50 to-accent-primary/5 flex flex-col justify-between relative overflow-hidden transition-all duration-300 shadow-[0_20px_50px_rgba(37,99,235,0.05)] min-h-[480px]">
               {/* Animated Floating Glow behind card */}
               <div className="absolute top-0 right-0 w-48 h-48 bg-accent-purple/10 rounded-full blur-[60px] pointer-events-none -z-10" />
-              
+
               <div
                 key={activeServiceIndex}
                 className="animate-fade-in-up space-y-6 flex-1 flex flex-col justify-between"
@@ -688,7 +692,8 @@ export default function HomePage() {
                 {/* Card CTA Footer */}
                 <div className="pt-8 flex flex-col sm:flex-row gap-4 items-center justify-between mt-auto">
                   <p className="text-[11px] text-muted-silver/80 max-w-[280px] leading-relaxed text-center sm:text-left">
-                    Ready to scale your business with {services[activeServiceIndex].name}? Let&apos;s start today.
+                    Ready to scale your business with{" "}
+                    {services[activeServiceIndex].name}? Let&apos;s start today.
                   </p>
                   <a
                     href="https://wa.me/919307967995"
@@ -703,6 +708,85 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Mobile View: Scrollable Cards from Right to Left */}
+        <div className="lg:hidden flex overflow-x-auto gap-6 pb-8 px-4 -mx-4 snap-x snap-mandatory scrollbar-none scroll-smooth">
+          {services.map((srv, idx) => (
+            <div
+              key={idx}
+              className="snap-center shrink-0 w-[85vw] sm:w-[400px] glass-card p-6 rounded-2xl border border-accent-primary/20 bg-gradient-to-br from-white/90 via-white/60 to-accent-primary/5 flex flex-col justify-between relative overflow-hidden shadow-[0_10px_30px_rgba(37,99,235,0.04)]"
+            >
+              {/* Floating Glow behind card */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-accent-purple/10 rounded-full blur-[40px] pointer-events-none -z-10" />
+
+              <div className="space-y-4 flex-1 flex flex-col justify-between">
+                <div>
+                  {/* Service Header Info */}
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-accent-primary/10 border border-accent-primary/20 text-accent-secondary flex items-center justify-center">
+                        {srv.icon}
+                      </div>
+                      <h3 className="font-syne font-black text-base sm:text-lg text-foreground">
+                        {srv.name}
+                      </h3>
+                    </div>
+                    <span className="font-syne font-black text-2xl text-accent-secondary/15 select-none">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  {/* Service Description */}
+                  <p className="text-muted-silver text-xs sm:text-sm leading-relaxed mt-4">
+                    {srv.desc}
+                  </p>
+
+                  <div className="border-t border-accent-primary/15 my-4" />
+
+                  {/* Included bullets layout */}
+                  <div>
+                    <span className="block text-[9px] uppercase font-black text-accent-secondary tracking-widest bg-accent-primary/15 border border-accent-primary/30 px-2 py-0.5 rounded-full w-max mb-3">
+                      Key Deliverables
+                    </span>
+                    <div className="grid grid-cols-1 gap-2">
+                      {srv.offers.slice(0, 5).map((off, oIdx) => (
+                        <div
+                          key={oIdx}
+                          className="flex items-center gap-2 p-2 rounded-lg bg-white/40 border border-accent-primary/5 hover:border-accent-primary/20 hover:bg-white/80 transition-all duration-300 shadow-[0_1px_4px_rgba(0,0,0,0.01)]"
+                        >
+                          <div className="w-4.5 h-4.5 rounded-full bg-accent-primary/15 flex items-center justify-center text-accent-secondary flex-shrink-0">
+                            <Check className="w-3 h-3" />
+                          </div>
+                          <span className="text-[11px] font-semibold text-foreground/90 truncate">
+                            {off}
+                          </span>
+                        </div>
+                      ))}
+                      {srv.offers.length > 5 && (
+                        <div className="text-[10px] text-muted-silver/80 italic pl-1">
+                          + {srv.offers.length - 5} more deliverables
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Card CTA Footer */}
+                <div className="pt-4 mt-auto">
+                  <a
+                    href="https://wa.me/919307967995"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full px-4 py-2.5 bg-gradient-to-r from-accent-secondary to-accent-primary text-white font-bold rounded-xl text-xs uppercase tracking-wider text-center shadow-[0_4px_12px_rgba(37,99,235,0.15)] hover:shadow-[0_4px_22px_rgba(37,99,235,0.35)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <span>Consult on WhatsApp</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
