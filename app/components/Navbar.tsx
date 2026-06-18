@@ -100,17 +100,14 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/#home" className="flex items-center space-x-3 group">
+        <Link href="/#home" className="flex items-center group">
           <Image
-            src="/logo.png"
+            src="/adfily-logo.jpeg"
             alt="Adfily Logo"
-            width={32}
-            height={32}
-            className="rounded-lg object-cover shadow-[0_0_15px_rgba(124,58,237,0.3)] group-hover:scale-110 transition-transform duration-300"
+            width={40}
+            height={40}
+            className="rounded-lg object-cover shadow-[0_0_15px_rgba(37,99,235,0.35)] group-hover:scale-110 transition-transform duration-300"
           />
-          <span className="font-syne font-extrabold text-xl tracking-wider uppercase text-white group-hover:text-glow transition-all duration-300">
-            Adfily
-          </span>
         </Link>
 
         {/* Desktop Navigation Links */}
@@ -123,13 +120,13 @@ export default function Navbar() {
                 href={item.path}
                 className={`text-sm font-medium tracking-wide transition-all duration-300 relative py-1 ${
                   isActive
-                    ? "text-accent-purple-light font-semibold"
-                    : "text-muted-silver hover:text-white"
+                    ? "text-accent-secondary font-semibold"
+                    : "text-muted-silver hover:text-foreground"
                 }`}
               >
                 {item.name}
                 {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent-purple to-accent-purple-light rounded-full shadow-[0_0_8px_rgba(168,85,247,0.6)]" />
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent-primary to-accent-secondary rounded-full shadow-[0_0_10px_rgba(37,99,235,0.55)]" />
                 )}
               </Link>
             );
@@ -142,7 +139,7 @@ export default function Navbar() {
             href="https://wa.me/919307967995"
             target="_blank"
             rel="noopener noreferrer"
-            className="group px-6 py-2.5 rounded-full border border-[#25D366] text-sm font-semibold text-white hover:bg-[#25D366]/10 hover:shadow-[0_0_15px_rgba(37,211,102,0.4)] transition-all duration-300 flex items-center gap-2 cursor-pointer"
+            className="group px-6 py-2.5 rounded-full border border-[#25D366] text-sm font-semibold text-foreground hover:text-[#25D366] hover:bg-[#25D366]/10 hover:shadow-[0_0_15px_rgba(37,211,102,0.4)] transition-all duration-300 flex items-center gap-2 cursor-pointer"
           >
             <span>Let&apos;s Talk</span>
             <WhatsAppIcon className="w-4 h-4 text-[#25D366] group-hover:scale-110 transition-transform" />
@@ -152,7 +149,7 @@ export default function Navbar() {
         {/* Mobile Menu Toggle */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden text-white hover:text-accent-purple-light transition-colors duration-300 p-1"
+          className="lg:hidden text-foreground hover:text-accent-secondary transition-colors duration-300 p-1"
           aria-label="Toggle navigation menu"
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -161,7 +158,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation Panel */}
       {isOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-white/5 py-8 px-6 animate-fade-in-up">
+        <div className="lg:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-slate-200 py-8 px-6 animate-fade-in-up">
           <div className="flex flex-col space-y-5">
             {navItems.map((item) => {
               const isActive = pathname === item.path || (pathname === "/" && activeSection === item.path);
@@ -170,10 +167,10 @@ export default function Navbar() {
                   key={item.path}
                   href={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`text-lg font-semibold tracking-wide py-2 border-b border-white/5 transition-all duration-300 ${
+                  className={`text-lg font-semibold tracking-wide py-2 border-b border-slate-100 transition-all duration-300 ${
                     isActive
-                      ? "text-accent-purple-light"
-                      : "text-muted-silver hover:text-white"
+                      ? "text-accent-secondary"
+                      : "text-muted-silver hover:text-foreground"
                   }`}
                 >
                   {item.name}
