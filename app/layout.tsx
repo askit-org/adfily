@@ -65,7 +65,7 @@ export default function RootLayout({
         <Navbar />
 
         {/* Main Content Area */}
-        <main className="flex-grow pt-24">{children}</main>
+        <main className="flex-grow">{children}</main>
 
         {/* Site Footer */}
         <Footer />

@@ -4,7 +4,7 @@ import BlogList from "../components/BlogList";
 
 export default function BlogPage() {
   return (
-    <div className="max-w-7xl mx-auto px-6 md:px-12 pt-12 pb-16 space-y-12">
+    <div className="max-w-7xl mx-auto px-6 md:px-12 pt-36 pb-16 space-y-12">
       {/* Page Title Header */}
       <section className="max-w-2xl space-y-6 animate-fade-in-up">
         <span className="text-xs font-bold uppercase tracking-widest text-accent-secondary">
