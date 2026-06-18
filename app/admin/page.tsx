@@ -220,7 +220,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-6 md:px-12 py-10">
+    <div className="max-w-7xl mx-auto px-6 md:px-12 pt-8 pb-16">
       {/* Background glow decorator */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-accent-purple/12 rounded-full blur-[100px] pointer-events-none -z-10" />
 
