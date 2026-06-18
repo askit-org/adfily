@@ -210,7 +210,7 @@ export default function AdminPage() {
     return (
       <div className="min-h-[75vh] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-10 h-10 text-accent-purple-light animate-spin" />
+          <Loader2 className="w-10 h-10 text-accent-secondary animate-spin" />
           <span className="text-muted-silver text-sm font-semibold tracking-wide">
             Verifying secure session...
           </span>
@@ -222,16 +222,16 @@ export default function AdminPage() {
   return (
     <div className="max-w-7xl mx-auto px-6 md:px-12 py-10">
       {/* Background glow decorator */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-accent-purple/10 rounded-full blur-[100px] pointer-events-none -z-10" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-accent-purple/12 rounded-full blur-[100px] pointer-events-none -z-10" />
 
       {phase === "email" && (
         <div className="min-h-[60vh] flex items-center justify-center">
           <div className="glass-card p-8 sm:p-10 rounded-3xl border border-white/5 max-w-md w-full space-y-6">
             <div className="flex flex-col items-center text-center space-y-2">
-              <div className="w-12 h-12 rounded-2xl bg-accent-purple/10 flex items-center justify-center text-accent-purple-light border border-accent-purple/20">
+              <div className="w-12 h-12 rounded-2xl bg-accent-secondary/10 flex items-center justify-center text-accent-secondary border border-accent-secondary/20">
                 <Lock className="w-6 h-6" />
               </div>
-              <h2 className="font-syne font-extrabold text-2xl text-white mt-3">
+              <h2 className="font-syne font-extrabold text-2xl text-foreground mt-3">
                 Admin Authentication
               </h2>
               <p className="text-xs text-muted-silver leading-relaxed">
@@ -259,7 +259,7 @@ export default function AdminPage() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-accent-purple transition-all"
+                    className="w-full pl-10 pr-4 py-3 bg-accent-primary/5 border border-accent-primary/30 rounded-xl text-sm text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/25 transition-all"
                     placeholder="e.g. john@gmail.com"
                     required
                   />
@@ -269,7 +269,7 @@ export default function AdminPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 bg-gradient-to-r from-accent-purple to-accent-purple-light text-white font-bold rounded-xl text-xs uppercase tracking-widest shadow-[0_4px_15px_rgba(124,58,237,0.2)] hover:shadow-[0_4px_25px_rgba(124,58,237,0.4)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 bg-gradient-to-r from-accent-secondary to-accent-primary text-white font-bold rounded-xl text-xs uppercase tracking-widest shadow-[0_4px_15px_rgba(37, 99, 235, 0.15)] hover:shadow-[0_4px_25px_rgba(37, 99, 235, 0.35)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
               >
                 {loading ? (
                   <>
@@ -290,17 +290,17 @@ export default function AdminPage() {
           <div className="glass-card p-8 sm:p-10 rounded-3xl border border-white/5 max-w-md w-full space-y-6">
             <button
               onClick={() => setPhase("email")}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-silver hover:text-white transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-silver hover:text-foreground transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back</span>
             </button>
 
             <div className="flex flex-col items-center text-center space-y-2">
-              <div className="w-12 h-12 rounded-2xl bg-accent-purple/10 flex items-center justify-center text-accent-purple-light border border-accent-purple/20">
+              <div className="w-12 h-12 rounded-2xl bg-accent-secondary/10 flex items-center justify-center text-accent-secondary border border-accent-secondary/20">
                 <KeyRound className="w-6 h-6" />
               </div>
-              <h2 className="font-syne font-extrabold text-2xl text-white mt-3">
+              <h2 className="font-syne font-extrabold text-2xl text-foreground mt-3">
                 Verify OTP
               </h2>
               <p className="text-xs text-muted-silver leading-relaxed">
@@ -329,7 +329,7 @@ export default function AdminPage() {
                   type="text"
                   value={otp}
                   onChange={(e) => setOtp(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-sm text-center text-white font-mono tracking-[8px] text-lg focus:outline-none focus:border-accent-purple transition-all"
+                  className="w-full px-4 py-3 bg-accent-primary/5 border border-accent-primary/30 rounded-xl text-sm text-center text-foreground font-mono tracking-[8px] text-lg focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/25 transition-all"
                   placeholder="000000"
                   maxLength={6}
                   required
@@ -339,7 +339,7 @@ export default function AdminPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 bg-gradient-to-r from-accent-purple to-accent-purple-light text-white font-bold rounded-xl text-xs uppercase tracking-widest shadow-[0_4px_15px_rgba(124,58,237,0.2)] hover:shadow-[0_4px_25px_rgba(124,58,237,0.4)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 bg-gradient-to-r from-accent-secondary to-accent-primary text-white font-bold rounded-xl text-xs uppercase tracking-widest shadow-[0_4px_15px_rgba(37, 99, 235, 0.15)] hover:shadow-[0_4px_25px_rgba(37, 99, 235, 0.35)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
               >
                 {loading ? (
                   <>
@@ -360,11 +360,11 @@ export default function AdminPage() {
           {/* Header Dashboard section */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-white/5 pb-6">
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-purple/10 border border-accent-purple/20 text-[10px] font-semibold text-accent-purple-light uppercase tracking-widest">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-secondary/10 border border-accent-secondary/20 text-[10px] font-semibold text-accent-secondary uppercase tracking-widest">
                 <Sparkles className="w-3 h-3" />
                 <span>Admin Dashboard</span>
               </div>
-              <h1 className="font-syne font-extrabold text-3xl sm:text-4xl text-white">
+              <h1 className="font-syne font-extrabold text-3xl sm:text-4xl text-foreground">
                 Influencer Leads
               </h1>
               <p className="text-xs sm:text-sm text-muted-silver">
@@ -377,7 +377,7 @@ export default function AdminPage() {
               <button
                 onClick={handleDownloadExcel}
                 disabled={leads.length === 0}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-accent-purple to-accent-purple-light text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-[0_4px_12px_rgba(124,58,237,0.25)] hover:shadow-[0_4px_20px_rgba(124,58,237,0.4)] transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-accent-secondary to-accent-primary text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-[0_4px_12px_rgba(37, 99, 235, 0.15)] hover:shadow-[0_4px_20px_rgba(37, 99, 235, 0.35)] transition-all duration-300 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
               >
                 <Download className="w-4 h-4" />
                 <span>Download Leads Excel</span>
@@ -385,7 +385,7 @@ export default function AdminPage() {
 
               <button
                 onClick={handleLogout}
-                className="px-4 py-2.5 rounded-xl border border-white/10 hover:border-red-500/50 bg-white/5 hover:bg-red-500/10 text-white hover:text-red-400 text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all duration-300 cursor-pointer"
+                className="px-4 py-2.5 rounded-xl border border-accent-primary/30 hover:border-red-500/50 bg-accent-primary/5 hover:bg-red-500/10 text-foreground hover:text-red-600 shadow-sm text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all duration-300 cursor-pointer"
               >
                 <LogOut className="w-4 h-4" />
                 <span>Logout</span>
@@ -396,7 +396,7 @@ export default function AdminPage() {
           {leads.length === 0 ? (
             <div className="glass-card py-20 rounded-3xl border border-white/5 text-center flex flex-col items-center justify-center space-y-4">
               <Users className="w-12 h-12 text-muted-silver/40" />
-              <h3 className="font-syne font-extrabold text-xl text-white">
+              <h3 className="font-syne font-extrabold text-xl text-foreground">
                 No Leads Found
               </h3>
               <p className="text-sm text-muted-silver max-w-sm">
@@ -422,7 +422,7 @@ export default function AdminPage() {
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5 text-white">
+                  <tbody className="divide-y divide-accent-primary/20 text-foreground">
                     {leads.map((lead) => (
                       <tr
                         key={lead.id}
@@ -430,7 +430,7 @@ export default function AdminPage() {
                       >
                         {/* Name & Contact Info */}
                         <td className="py-4 px-5 space-y-1.5 max-w-[200px]">
-                          <span className="block font-bold text-sm text-accent-purple-light truncate">
+                          <span className="block font-bold text-sm text-accent-secondary truncate">
                             {lead.full_name}
                           </span>
                           <div className="flex items-center gap-1.5 text-muted-silver">
@@ -472,7 +472,7 @@ export default function AdminPage() {
                           </div>
                           <div className="text-muted-silver">
                             Followers:{" "}
-                            <strong className="text-white">
+                            <strong className="text-foreground">
                               {lead.total_followers}
                             </strong>
                           </div>
@@ -490,13 +490,13 @@ export default function AdminPage() {
                         <td className="py-4 px-5 space-y-1.5">
                           <div>
                             Niche:{" "}
-                            <strong className="text-accent-purple-light">
+                            <strong className="text-accent-secondary">
                               {lead.niche_category}
                             </strong>
                           </div>
                           <div className="text-muted-silver">
                             Reel Views:{" "}
-                            <strong className="text-white">
+                            <strong className="text-foreground">
                               {lead.avg_reel_views}
                             </strong>
                           </div>
@@ -512,7 +512,7 @@ export default function AdminPage() {
 
                         {/* Financial metric */}
                         <td className="py-4 px-5">
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-accent-purple/10 border border-accent-purple/20 text-accent-purple-light font-bold">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-accent-secondary/10 border border-accent-secondary/20 text-accent-secondary font-bold">
                             <DollarSign className="w-3.5 h-3.5" />
                             <span>{lead.expected_charges}</span>
                           </span>

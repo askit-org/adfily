@@ -38,7 +38,7 @@ export const BLOG_POSTS: BlogPost[] = [
       <h3 class="text-xl font-bold text-white mt-6 mb-2">3. Expand the Caption Field</h3>
       <p class="text-muted-silver leading-relaxed mb-6">Take advantage of the expanded 4,000-character description field. Do not publish empty captions with just hashtags. Treat the caption like a mini blog post: outline bullet points, list target FAQs, and insert high-intent keywords naturally.</p>
       
-      <blockquote class="border-l-4 border-accent-purple bg-white/2 p-4 rounded-r-xl text-white italic my-8">
+      <blockquote class="border-l-4 border-accent-primary bg-white/2 p-4 rounded-r-xl text-white italic my-8">
         "Content that ranks top-3 for high-volume TikTok searches generates a continuous stream of organic traffic that does not decay when the creator ceases posting."
       </blockquote>
       

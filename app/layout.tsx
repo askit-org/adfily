@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Adfily" }],
   icons: {
-    icon: "/logo.png",
+    icon: "/ADlogo.png",
   },
 };
 
@@ -56,10 +56,10 @@ export default function RootLayout({
       lang="en"
       className={`${syne.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-accent-purple selection:text-white">
+      <body className="min-h-full flex flex-col text-foreground selection:bg-accent-primary selection:text-white">
         {/* Decorative ambient glowing backdrops */}
-        <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-accent-purple/10 rounded-full blur-[120px] pointer-events-none -z-10" />
-        <div className="fixed bottom-0 right-1/4 w-[600px] h-[600px] bg-accent-purple-light/5 rounded-full blur-[140px] pointer-events-none -z-10" />
+        <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-accent-primary/10 rounded-full blur-[120px] pointer-events-none -z-10 animate-ambient-slow" />
+        <div className="fixed bottom-0 right-1/4 w-[600px] h-[600px] bg-accent-purple/8 rounded-full blur-[140px] pointer-events-none -z-10 animate-ambient-delayed" />
 
         {/* Navigation Navbar */}
         <Navbar />

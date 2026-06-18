@@ -77,13 +77,13 @@ export async function POST(req: NextRequest) {
       subject: 'Adfily Admin Verification OTP',
       text: `Your Admin portal verification OTP code is: ${otp}. It will expire in 5 minutes.`,
       html: `
-        <div style="font-family: sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #0b0b0c; color: #ffffff;">
-          <h2 style="color: #a855f7; font-family: 'Syne', sans-serif; font-weight: 800; border-bottom: 1px solid #27272a; padding-bottom: 10px;">Adfily Admin Portal</h2>
-          <p style="color: #94a3b8; font-size: 14px; line-height: 1.5;">A login request was made to access the Adfily Influencer Leads admin dashboard.</p>
-          <div style="background-color: rgba(124, 58, 237, 0.1); border: 1px dashed #7c3aed; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0;">
-            <span style="font-size: 24px; font-weight: bold; letter-spacing: 4px; color: #a855f7;">${otp}</span>
+        <div style="font-family: sans-serif; max-width: 500px; margin: auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #ffffff; box-shadow: 0 10px 25px rgba(0,0,0,0.05); color: #0b0b19;">
+          <h2 style="color: #0b0b19; font-family: 'Syne', sans-serif; font-weight: 800; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">Adfily Admin Portal</h2>
+          <p style="color: #4b5563; font-size: 14px; line-height: 1.5;">A login request was made to access the Adfily Influencer Leads admin dashboard.</p>
+          <div style="background-color: rgba(37, 99, 235, 0.12); border: 1px dashed #2563eb; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0;">
+            <span style="font-size: 24px; font-weight: bold; letter-spacing: 4px; color: #0b0b19;">${otp}</span>
           </div>
-          <p style="color: #94a3b8; font-size: 12px;">This verification code is active for <strong>5 minutes</strong>. If you did not request this code, please ignore this email.</p>
+          <p style="color: #4b5563; font-size: 12px;">This verification code is active for <strong>5 minutes</strong>. If you did not request this code, please ignore this email.</p>
         </div>
       `,
     });
