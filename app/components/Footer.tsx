@@ -72,9 +72,15 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <span className="block text-foreground font-semibold text-xs uppercase">Address:</span>
-              <span className="leading-relaxed">
-                Office no.141 Bizzbay Mall, NIBM Undri Road Pune-48, India
+              <span className="block text-foreground font-semibold text-xs uppercase">Pune Address:</span>
+              <span className="leading-relaxed text-xs">
+                Office no.142 Bizzbay Mall, NIBM Undri Road Pune-48, India
+              </span>
+            </li>
+            <li className="mt-2">
+              <span className="block text-foreground font-semibold text-xs uppercase">Delhi Address:</span>
+              <span className="leading-relaxed text-xs">
+                Block no. 14, Nearby metro Mayur Vihar Phase 1, Delhi 110091, India
               </span>
             </li>
           </ul>

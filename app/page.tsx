@@ -22,6 +22,10 @@ import {
   CheckCircle2,
   Award,
   MessageSquare,
+  Target,
+  Map,
+  Zap,
+  TrendingUp,
 } from "lucide-react";
 
 // Services Data matching the user request
@@ -105,71 +109,6 @@ const services = [
       "Content Visual Design",
     ],
   },
-  {
-    icon: <Search className="w-6 h-6" />,
-    name: "Search Engine Optimization (SEO)",
-    desc: "Improve your website's Google rankings and attract high-quality organic traffic.",
-    featured: false,
-    offers: [
-      "Keyword Research",
-      "On-Page SEO",
-      "Technical SEO",
-      "Local SEO",
-      "SEO Audits & Reporting",
-    ],
-  },
-  {
-    icon: <FileText className="w-6 h-6" />,
-    name: "Content Strategy",
-    desc: "Create data-driven content roadmaps that connect with your target audience.",
-    featured: false,
-    offers: [
-      "Content Planning",
-      "Audience Research",
-      "Content Calendars",
-      "Brand Messaging",
-      "Content Performance Analysis",
-    ],
-  },
-  {
-    icon: <Flame className="w-6 h-6" />,
-    name: "Promotions & Brand Campaigns",
-    desc: "Launch impactful promotional campaigns that generate leads and boost brand awareness.",
-    featured: false,
-    offers: [
-      "Product Launch Campaigns",
-      "Brand Awareness Campaigns",
-      "Seasonal Promotions",
-      "Event Marketing",
-      "Campaign Strategy & Execution",
-    ],
-  },
-  {
-    icon: <Film className="w-6 h-6" />,
-    name: "Video Editing",
-    desc: "Transform raw footage into highly engaging assets for reels, YouTube, and ads.",
-    featured: false,
-    offers: [
-      "Reels Editing",
-      "YouTube Video Editing",
-      "Short-form Content",
-      "Motion Graphics",
-      "Promotional Video Editing",
-    ],
-  },
-  {
-    icon: <Smartphone className="w-6 h-6" />,
-    name: "UGC Content Creation",
-    desc: "Authentic customer experience and lifestyle content that builds brand trust.",
-    featured: false,
-    offers: [
-      "Product Demonstrations",
-      "Customer Experience Videos",
-      "Lifestyle Content",
-      "Testimonial Videos",
-      "Social Media UGC Campaigns",
-    ],
-  },
 ];
 
 // Why Choose Us Data matching the user request
@@ -251,19 +190,18 @@ const clientLogos = [
   { name: "Jyoti Beauty Salon", path: "/clients/jyoti beauty salon.png" },
   { name: "M Shining Star", path: "/clients/m shining star.png" },
   { name: "Mobo Fix", path: "/clients/mobo fix.png" },
-  { name: "PTN Promos", path: "/clients/ptn_promos.png" },
   {
     name: "Royal Foam & Furnishing",
     path: "/clients/royal foam & furnishing.png",
   },
   { name: "Shah Enterprises", path: "/clients/shah enterprises.png" },
-  { name: "Sherkhan", path: "/clients/sherkhan.png" },
   { name: "Sizzlings Kitchen", path: "/clients/sizzlings kitchen.png" },
   { name: "Vaishnavi Electricals", path: "/clients/vaishnavi electricals.png" },
 ];
 
 export default function HomePage() {
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
+  const [showInfluencerPopup, setShowInfluencerPopup] = useState(true);
   // Influencer Form State
   const [formData, setFormData] = useState({
     fullName: "",
@@ -384,7 +322,7 @@ export default function HomePage() {
               href="#contact"
               className="btn-glow px-8 py-4 bg-gradient-to-r from-accent-secondary to-accent-primary text-white font-bold rounded-xl shadow-[0_4px_20px_rgba(37, 99, 235, 0.25)] hover:shadow-[0_4px_30px_rgba(37, 99, 235, 0.45)] transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto"
             >
-              <span>Book Your Free Consultation Today</span>
+              <span>Get In Touch With Us Today</span>
               <ArrowRight className="w-5 h-5" />
             </a>
             <a
@@ -393,43 +331,6 @@ export default function HomePage() {
             >
               Explore Services
             </a>
-          </div>
-        </div>
-      </section>
-
-      {/* CLIENT LOGO CAROUSEL */}
-      <section className="bg-gradient-to-br from-accent-primary/5 via-white/60 to-accent-secondary/3 py-8 border-y border-accent-primary/25 relative z-10">
-        <div className="max-w-7xl mx-auto px-6 mb-4">
-          <p className="text-center text-xs font-semibold uppercase tracking-widest text-muted-silver/60">
-            Trusted By Growing Businesses & Brands
-          </p>
-        </div>
-        <div className="w-full overflow-hidden flex relative select-none py-6">
-          <div className="flex animate-marquee gap-16 whitespace-nowrap items-center">
-            {clientLogos.map((logo, idx) => (
-              <div
-                key={`logo-1-${idx}`}
-                className="flex-shrink-0 flex items-center justify-center h-16 w-36 px-4 bg-gradient-to-br from-accent-primary/5 via-white/80 to-accent-secondary/5 border border-accent-primary/20 hover:border-accent-primary/50 rounded-xl transition-all duration-300 ease-out hover:scale-120 hover:-translate-y-2 hover:shadow-[0_12px_24px_rgba(235,37,106,0.15)] relative hover:z-20 group"
-              >
-                <img
-                  src={logo.path}
-                  alt={`${logo.name} logo`}
-                  className="max-h-12 max-w-full object-contain transition-transform duration-300 ease-out group-hover:scale-105"
-                />
-              </div>
-            ))}
-            {clientLogos.map((logo, idx) => (
-              <div
-                key={`logo-2-${idx}`}
-                className="flex-shrink-0 flex items-center justify-center h-16 w-36 px-4 bg-gradient-to-br from-accent-primary/5 via-white/80 to-accent-secondary/5 border border-accent-primary/20 hover:border-accent-primary/50 rounded-xl transition-all duration-300 ease-out hover:scale-120 hover:-translate-y-2 hover:shadow-[0_12px_24px_rgba(235,37,106,0.15)] relative hover:z-20 group"
-              >
-                <img
-                  src={logo.path}
-                  alt={`${logo.name} logo`}
-                  className="max-h-12 max-w-full object-contain transition-transform duration-300 ease-out group-hover:scale-105"
-                />
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -539,98 +440,43 @@ export default function HomePage() {
         {/* Desktop View: Dynamic Interactive Panel Layout */}
         <div className="hidden lg:grid grid-cols-12 gap-8 items-stretch">
           {/* Left Columns - Interactive Service Tabs */}
-          <div className="lg:col-span-5 flex flex-col gap-6">
-            {/* Core Specialties (Featured Services) */}
-            <div className="space-y-3">
-              <span className="block text-[10px] font-black text-accent-secondary uppercase tracking-widest opacity-80 pl-1">
-                Core Specialties
-              </span>
-              <div className="flex flex-col gap-3">
-                {services
-                  .filter((s) => s.featured)
-                  .map((srv) => {
-                    const globalIdx = services.indexOf(srv);
-                    const isActive = activeServiceIndex === globalIdx;
-                    return (
-                      <button
-                        key={globalIdx}
-                        onClick={() => setActiveServiceIndex(globalIdx)}
-                        className={`w-full p-4 rounded-xl border text-left flex items-center gap-3.5 transition-all duration-300 cursor-pointer ${
-                          isActive
-                            ? "bg-gradient-to-r from-accent-secondary to-accent-primary text-white border-transparent shadow-[0_8px_20px_rgba(37,99,235,0.2)] scale-[1.02]"
-                            : "bg-white/60 hover:bg-white/95 text-foreground border-accent-primary/10 hover:border-accent-primary/30 shadow-sm hover:scale-[1.01]"
-                        }`}
-                      >
-                        <div
-                          className={`w-10 h-10 rounded-lg flex items-center justify-center border transition-colors duration-300 ${
-                            isActive
-                              ? "bg-white/20 border-white/30 text-white"
-                              : "bg-accent-primary/10 border-accent-primary/20 text-accent-secondary"
-                          }`}
-                        >
-                          {srv.icon}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-syne font-bold text-sm sm:text-base truncate">
-                            {srv.name}
-                          </h3>
-                          <p
-                            className={`text-[10px] line-clamp-1 mt-0.5 ${
-                              isActive ? "text-white/80" : "text-muted-silver"
-                            }`}
-                          >
-                            {srv.desc}
-                          </p>
-                        </div>
-                      </button>
-                    );
-                  })}
-              </div>
-            </div>
-
-            {/* Additional Services (Tighter, secondary representation) */}
-            <div className="space-y-3">
-              <span className="block text-[10px] font-black text-accent-secondary uppercase tracking-widest opacity-80 pl-1">
-                Additional Offerings
-              </span>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {services
-                  .filter((s) => !s.featured)
-                  .map((srv) => {
-                    const globalIdx = services.indexOf(srv);
-                    const isActive = activeServiceIndex === globalIdx;
-                    return (
-                      <button
-                        key={globalIdx}
-                        onClick={() => setActiveServiceIndex(globalIdx)}
-                        className={`p-3 rounded-xl border text-left flex items-center gap-2.5 transition-all duration-300 cursor-pointer ${
-                          isActive
-                            ? "bg-gradient-to-r from-accent-secondary to-accent-primary text-white border-transparent shadow-[0_5px_15px_rgba(37,99,235,0.15)] scale-[1.02]"
-                            : "bg-white/40 hover:bg-white/75 text-foreground/80 hover:text-foreground border-accent-primary/5 hover:border-accent-primary/25 shadow-xs"
-                        }`}
-                      >
-                        <div
-                          className={`w-7 h-7 rounded flex items-center justify-center flex-shrink-0 border transition-colors duration-300 ${
-                            isActive
-                              ? "bg-white/20 border-white/30 text-white"
-                              : "bg-accent-primary/5 border-accent-primary/10 text-accent-secondary"
-                          }`}
-                        >
-                          {React.cloneElement(
-                            srv.icon as React.ReactElement<any>,
-                            {
-                              className: "w-3.5 h-3.5",
-                            },
-                          )}
-                        </div>
-                        <span className="font-syne font-bold text-xs truncate">
-                          {srv.name}
-                        </span>
-                      </button>
-                    );
-                  })}
-              </div>
-            </div>
+          <div className="lg:col-span-5 flex flex-col gap-3 justify-center">
+            {services.map((srv, globalIdx) => {
+              const isActive = activeServiceIndex === globalIdx;
+              return (
+                <button
+                  key={globalIdx}
+                  onClick={() => setActiveServiceIndex(globalIdx)}
+                  className={`w-full p-4 rounded-xl border text-left flex items-center gap-3.5 transition-all duration-300 cursor-pointer ${
+                    isActive
+                      ? "bg-gradient-to-r from-accent-secondary to-accent-primary text-white border-transparent shadow-[0_8px_20px_rgba(177,129,33,0.2)] scale-[1.02]"
+                      : "bg-white/60 hover:bg-white/95 text-foreground border-accent-primary/10 hover:border-accent-primary/30 shadow-sm hover:scale-[1.01]"
+                  }`}
+                >
+                  <div
+                    className={`w-10 h-10 rounded-lg flex items-center justify-center border transition-colors duration-300 ${
+                      isActive
+                        ? "bg-white/20 border-white/30 text-white"
+                        : "bg-accent-primary/10 border-accent-primary/20 text-accent-secondary"
+                    }`}
+                  >
+                    {srv.icon}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-syne font-bold text-sm sm:text-base truncate">
+                      {srv.name}
+                    </h3>
+                    <p
+                      className={`text-[10px] line-clamp-1 mt-0.5 ${
+                        isActive ? "text-white/80" : "text-muted-silver"
+                      }`}
+                    >
+                      {srv.desc}
+                    </p>
+                  </div>
+                </button>
+              );
+            })}
           </div>
 
           {/* Right Columns - High Impact Detailed Showcase Card */}
@@ -841,33 +687,202 @@ export default function HomePage() {
         className="max-w-6xl mx-auto px-6 md:px-12 scroll-mt-24"
       >
         {/* Header */}
-        <div className="text-center space-y-4 max-w-2xl mx-auto mb-20">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-primary/20 border border-accent-primary/45 text-xs font-semibold text-accent-secondary uppercase tracking-wider">
-            <span>Our Process</span>
+        <div className="text-center space-y-4 max-w-3xl mx-auto mb-20">
+          <div className="flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest text-muted-silver">
+            <span>Our Work Process</span>
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-foreground">
-            How We Work
+            Our Proven <span className="text-accent-primary">Work Process</span>
           </h2>
         </div>
 
-        {/* Process Timeline */}
-        <div className="relative border-l border-slate-200 ml-4 md:ml-8 space-y-12">
-          {howWeWork.map((step, idx) => (
-            <div key={idx} className="relative pl-8 md:pl-12 group">
-              {/* Numbered node badge */}
-              <div className="absolute -left-4 top-0 w-8 h-8 rounded-full bg-gradient-to-r from-accent-secondary to-accent-primary text-white font-syne font-extrabold text-sm flex items-center justify-center shadow-[0_0_12px_rgba(37, 99, 235, 0.25)] border border-white group-hover:scale-110 transition-transform duration-300">
-                {step.step}
+        {/* Desktop View: Horizontal Process Timeline */}
+        <div className="hidden lg:flex relative items-start justify-between w-full mt-12 mb-20 px-4">
+          {/* Background solid connecting line */}
+          <div className="absolute top-[48px] left-[5%] right-[5%] h-[3px] bg-slate-100 -z-10" />
+
+          {howWeWork.map((step, idx) => {
+            const getIcon = (i: number) => {
+              switch (i) {
+                case 0:
+                  return <Target className="w-8 h-8 text-white" />;
+                case 1:
+                  return <Map className="w-8 h-8 text-white" />;
+                case 2:
+                  return <Zap className="w-8 h-8 text-white" />;
+                case 3:
+                  return <TrendingUp className="w-8 h-8 text-white" />;
+                case 4:
+                  return <Flame className="w-8 h-8 text-white" />;
+                default:
+                  return <Target className="w-8 h-8 text-white" />;
+              }
+            };
+
+            return (
+              <React.Fragment key={idx}>
+                {/* Step Card */}
+                <div className="flex flex-col items-center text-center group flex-1 relative z-10 px-2">
+                  {/* Circle step containing icon */}
+                  <div className="relative w-24 h-24 rounded-full bg-gradient-to-tr from-accent-primary to-accent-primary/80 text-white flex items-center justify-center shadow-[0_10px_30px_rgba(177,129,33,0.3)] border-4 border-white transition-all duration-300 group-hover:scale-110">
+                    {getIcon(idx)}
+                    {/* Step number badge overlapping on the right */}
+                    <span className="absolute -right-1 top-6 w-7 h-7 rounded-full bg-accent-secondary text-white font-syne font-black text-xs flex items-center justify-center border-2 border-white shadow-md">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  {/* Text Content */}
+                  <h3 className="font-syne font-black text-lg text-foreground mt-8 group-hover:text-accent-primary transition-colors duration-200">
+                    {step.title}
+                  </h3>
+                  <p className="text-muted-silver text-xs leading-relaxed mt-3 max-w-[180px]">
+                    {step.desc}
+                  </p>
+                </div>
+
+                {/* Animated Arrow Connector (Only between steps) */}
+                {idx < howWeWork.length - 1 && (
+                  <div className="flex items-center justify-center h-24 relative z-10 px-1">
+                    <svg
+                      className="w-28 h-8 text-slate-300 transition-all duration-300 ease-out animate-arrow-flow cursor-pointer"
+                      viewBox="0 0 112 32"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      style={{ animationDelay: `${idx * 0.3}s` }}
+                    >
+                      <path
+                        d="M 6 16 L 106 16"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        d="M 94 7 L 106 16 L 94 25"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </div>
+
+        {/* Mobile View: Horizontal Scrollable/Swipeable Process Timeline */}
+        <div className="lg:hidden flex overflow-x-auto gap-6 pb-8 px-6 -mx-6 snap-x snap-mandatory scrollbar-none scroll-smooth relative items-start">
+          {/* Connecting line for mobile */}
+          <div className="absolute top-[48px] left-12 w-[160%] h-[3px] bg-slate-100 -z-10" />
+
+          {howWeWork.map((step, idx) => {
+            const getIcon = (i: number) => {
+              switch (i) {
+                case 0:
+                  return <Target className="w-8 h-8 text-white" />;
+                case 1:
+                  return <Map className="w-8 h-8 text-white" />;
+                case 2:
+                  return <Zap className="w-8 h-8 text-white" />;
+                case 3:
+                  return <TrendingUp className="w-8 h-8 text-white" />;
+                case 4:
+                  return <Flame className="w-8 h-8 text-white" />;
+                default:
+                  return <Target className="w-8 h-8 text-white" />;
+              }
+            };
+
+            return (
+              <React.Fragment key={idx}>
+                {/* Step Card */}
+                <div className="snap-center shrink-0 w-[70vw] sm:w-[280px] flex flex-col items-center text-center group relative z-10 px-2">
+                  {/* Circle step containing icon */}
+                  <div className="relative w-24 h-24 rounded-full bg-gradient-to-tr from-accent-primary to-accent-primary/80 text-white flex items-center justify-center shadow-[0_10px_30px_rgba(177,129,33,0.25)] border-4 border-white transition-all duration-300">
+                    {getIcon(idx)}
+                    {/* Step number badge overlapping on the right */}
+                    <span className="absolute -right-1 top-6 w-7 h-7 rounded-full bg-accent-secondary text-white font-syne font-black text-xs flex items-center justify-center border-2 border-white shadow-md">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+
+                  {/* Text Content */}
+                  <h3 className="font-syne font-black text-base text-foreground mt-6">
+                    {step.title}
+                  </h3>
+                  <p className="text-muted-silver text-xs leading-relaxed mt-2">
+                    {step.desc}
+                  </p>
+                </div>
+
+                {/* Animated Arrow Connector (Only between steps) */}
+                {idx < howWeWork.length - 1 && (
+                  <div className="flex items-center justify-center h-24 relative z-10 px-2 shrink-0">
+                    <svg
+                      className="w-20 h-6 text-slate-300 transition-all duration-300 ease-out animate-arrow-flow cursor-pointer"
+                      viewBox="0 0 80 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      style={{ animationDelay: `${idx * 0.3}s` }}
+                    >
+                      <path
+                        d="M 4 12 L 76 12"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        d="M 66 5 L 76 12 L 66 19"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* CLIENT LOGO CAROUSEL */}
+      <section className="bg-gradient-to-br from-accent-primary/5 via-white/60 to-accent-secondary/3 py-8 border-y border-accent-primary/25 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 mb-4">
+          <p className="text-center text-xs font-semibold uppercase tracking-widest text-muted-silver/60">
+            Trusted By Growing Businesses & Brands
+          </p>
+        </div>
+        <div className="w-full overflow-hidden flex relative select-none py-6">
+          <div className="flex animate-marquee gap-16 whitespace-nowrap items-center">
+            {clientLogos.map((logo, idx) => (
+              <div
+                key={`logo-1-${idx}`}
+                className="flex-shrink-0 flex items-center justify-center h-16 w-36 px-4 bg-transparent border border-transparent hover:bg-accent-primary/10 hover:border-accent-primary/30 rounded-xl transition-all duration-300 ease-out hover:scale-120 hover:-translate-y-2 hover:shadow-[0_12px_24px_rgba(177,129,33,0.15)] relative hover:z-20 group"
+              >
+                <img
+                  src={logo.path}
+                  alt={`${logo.name} logo`}
+                  className="max-h-12 max-w-full object-contain transition-transform duration-300 ease-out group-hover:scale-105"
+                />
               </div>
-              <div className="space-y-2">
-                <h3 className="font-syne font-extrabold text-xl text-foreground group-hover:text-accent-secondary transition-colors duration-200">
-                  {step.title}
-                </h3>
-                <p className="text-muted-silver text-sm max-w-xl leading-relaxed">
-                  {step.desc}
-                </p>
+            ))}
+            {clientLogos.map((logo, idx) => (
+              <div
+                key={`logo-2-${idx}`}
+                className="flex-shrink-0 flex items-center justify-center h-16 w-36 px-4 bg-transparent border border-transparent hover:bg-accent-primary/10 hover:border-accent-primary/30 rounded-xl transition-all duration-300 ease-out hover:scale-120 hover:-translate-y-2 hover:shadow-[0_12px_24px_rgba(177,129,33,0.15)] relative hover:z-20 group"
+              >
+                <img
+                  src={logo.path}
+                  alt={`${logo.name} logo`}
+                  className="max-h-12 max-w-full object-contain transition-transform duration-300 ease-out group-hover:scale-105"
+                />
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1205,17 +1220,34 @@ export default function HomePage() {
                 </a>
               </div>
 
-              <div className="flex items-center gap-4 p-4 rounded-2xl border border-accent-primary/25 bg-gradient-to-br from-accent-primary/8 via-white/50 to-accent-secondary/4 shadow-sm">
-                <div className="w-10 h-10 rounded-xl bg-accent-secondary/10 flex items-center justify-center text-accent-secondary">
-                  <MapPin className="w-5 h-5" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex items-start gap-4 p-4 rounded-2xl border border-accent-primary/25 bg-gradient-to-br from-accent-primary/8 via-white/50 to-accent-secondary/4 shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-accent-secondary/10 flex items-center justify-center text-accent-secondary flex-shrink-0 mt-0.5">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] uppercase font-bold text-muted-silver">
+                      Pune Address
+                    </span>
+                    <span className="text-sm font-semibold text-foreground leading-relaxed">
+                      Office no.142 Bizzbay Mall, NIBM Undri Road Pune-48
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <span className="block text-[10px] uppercase font-bold text-muted-silver">
-                    India Address
-                  </span>
-                  <span className="text-sm font-semibold text-foreground leading-relaxed">
-                    Office no.141 Bizzbay Mall, NIBM Undri Road Pune-48
-                  </span>
+
+                <div className="flex items-start gap-4 p-4 rounded-2xl border border-accent-primary/25 bg-gradient-to-br from-accent-primary/8 via-white/50 to-accent-secondary/4 shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-accent-secondary/10 flex items-center justify-center text-accent-secondary flex-shrink-0 mt-0.5">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] uppercase font-bold text-muted-silver">
+                      Delhi Address
+                    </span>
+                    <span className="text-sm font-semibold text-foreground leading-relaxed">
+                      Block no. 14, Nearby metro Mayur Vihar Phase 1, Delhi
+                      110091
+                    </span>
+                  </div>
                 </div>
               </div>
 
@@ -1255,6 +1287,36 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Floating Influencer Registration Teaser Popup */}
+      {showInfluencerPopup && (
+        <div className="fixed bottom-6 right-6 z-40 max-w-sm glass-card p-5 rounded-2xl border border-accent-primary/30 bg-white/95 shadow-2xl flex flex-col gap-3 animate-fade-in-up md:max-w-[320px] max-w-[90vw]">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-accent-primary/10 border border-accent-primary/20 text-accent-secondary flex items-center justify-center flex-shrink-0">
+              <Sparkles className="w-5 h-5 text-accent-primary animate-pulse" />
+            </div>
+            <div>
+              <h4 className="font-syne font-black text-sm text-foreground">
+                Are you an Influencer?
+              </h4>
+              <p className="text-muted-silver text-xs mt-1 leading-relaxed">
+                Connect with top brands and monetize your content. Join our
+                network today!
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-2 justify-end mt-1">
+            <a
+              href="#register"
+              onClick={() => setShowInfluencerPopup(false)}
+              className="px-4 py-1.5 bg-gradient-to-r from-accent-secondary to-accent-primary text-white text-[10px] font-black rounded-lg uppercase tracking-wider shadow-[0_2px_8px_rgba(177,129,33,0.15)] hover:shadow-[0_2px_12px_rgba(177,129,33,0.3)] transition-all cursor-pointer flex items-center gap-1"
+            >
+              <span>Apply Now</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
