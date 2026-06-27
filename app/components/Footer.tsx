@@ -5,13 +5,13 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#F0F5FA] border-t border-accent-primary/30 pt-16 pb-8 mt-auto">
+    <footer className="bg-[#FAF8FD] border-t border-accent-primary/20 pt-16 pb-8 mt-auto">
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
         {/* Branding column */}
         <div className="space-y-4">
           <div className="flex items-center space-x-3">
-            <span className="font-syne font-extrabold tracking-wide uppercase text-foreground">
-              Adfily
+            <span className="font-syne font-black text-xl tracking-tight text-foreground">
+              Adfily<span className="text-accent-primary">.</span>
             </span>
           </div>
           <p className="text-muted-silver text-sm leading-relaxed max-w-xs">

@@ -1,5 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase';
+import crypto from 'crypto';
+
+const ALGORITHM = 'aes-256-cbc';
+const SECRET_KEY = process.env.OTP_SECRET || 'a_very_secure_32_byte_secret_key_12345';
+
+function decrypt(text: string): string {
+  try {
+    const [ivHex, encryptedHex] = text.split(':');
+    const iv = Buffer.from(ivHex, 'hex');
+    const key = crypto.scryptSync(SECRET_KEY, 'salt', 32);
+    const decipher = crypto.createDecipheriv(ALGORITHM, key, iv);
+    let decrypted = decipher.update(encryptedHex, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+  } catch (error) {
+    throw new Error('Failed to decrypt session token.');
+  }
+}
 
 export async function GET(req: NextRequest) {
   try {
@@ -13,35 +31,27 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    // Verify session in Supabase admin_sessions
-    const { data: sessions, error: sessionError } = await supabaseAdmin
-      .from('admin_sessions')
-      .select('*')
-      .eq('token', token)
-      .limit(1);
-
-    if (sessionError) {
-      console.error('Supabase DB error fetching session:', sessionError);
-      return NextResponse.json(
-        { error: 'Internal server error verifying session.' },
-        { status: 500 }
-      );
-    }
-
-    if (!sessions || sessions.length === 0) {
+    // Verify stateless encrypted session token
+    let session: { email: string; expiresAt: number };
+    try {
+      const decrypted = decrypt(token);
+      session = JSON.parse(decrypted);
+    } catch (err) {
       return NextResponse.json(
         { error: 'Unauthorized: Invalid session token.' },
         { status: 401 }
       );
     }
 
-    const session = sessions[0];
+    if (session.email !== 'adfilyofficial@gmail.com') {
+      return NextResponse.json(
+        { error: 'Unauthorized: Access denied.' },
+        { status: 403 }
+      );
+    }
 
-    // Check expiration
-    if (new Date() > new Date(session.expires_at)) {
-      // Session expired, delete it from DB
-      await supabaseAdmin.from('admin_sessions').delete().eq('token', token);
-      
+    // Check session expiration
+    if (Date.now() > session.expiresAt) {
       const response = NextResponse.json(
         { error: 'Unauthorized: Session expired.' },
         { status: 401 }
@@ -54,7 +64,7 @@ export async function GET(req: NextRequest) {
       return response;
     }
 
-    // Fetch leads
+    // Fetch leads from Supabase
     const { data: leads, error: leadsError } = await supabaseAdmin
       .from('influencer_registrations')
       .select('*')

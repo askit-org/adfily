@@ -1,21 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FFFFFF;
+  --background: #FDFBFF;
   --foreground: #0B0F19;
-  --card-bg: rgba(255, 255, 255, 0.6);
-  --card-border: rgba(37, 99, 235, 0.15);
-  --accent-primary: #71450E;
-  --accent-secondary: #000000;
-  --accent-purple: #7dd3fc;
-  --accent-purple-light: #e0f2fe;
-  --accent-glow: rgba(37, 99, 235, 0.12);
-  --muted-silver: #4B5563;
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-border: rgba(124, 58, 237, 0.12);
+  --accent-primary: #7C3AED;
+  --accent-secondary: #0B0F19;
+  --accent-purple: #C084FC;
+  --accent-purple-light: #F472B6;
+  --accent-glow: rgba(124, 58, 237, 0.15);
+  --muted-silver: #634b61;
 
   /* Premium Background Gradient Controls */
-  --bg-gradient-from: #ffffff;
-  --bg-gradient-via: #cdeaf0;   /* Light tint of #99ccd7 */
-  --bg-gradient-to: #99ccd7;    /* Requested gradient end color */
+  --bg-gradient-from: #FDF2F8;
+  --bg-gradient-via: #FAF5FF;
+  --bg-gradient-to: #E0F2FE;
   --bg-gradient-angle: 135deg;
 }
 
@@ -45,9 +45,12 @@ body {
   font-family: var(--font-inter), sans-serif;
   overflow-x: hidden;
   background-image: 
-    radial-gradient(rgba(37, 99, 235, 0.06) 1.5px, transparent 1.5px),
+    radial-gradient(at 10% 20%, rgba(244, 114, 182, 0.12) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(192, 132, 252, 0.15) 0px, transparent 50%),
+    radial-gradient(at 50% 80%, rgba(124, 58, 237, 0.08) 0px, transparent 50%),
+    radial-gradient(at 80% 90%, rgba(14, 165, 233, 0.12) 0px, transparent 50%),
     linear-gradient(var(--bg-gradient-angle), var(--bg-gradient-from) 0%, var(--bg-gradient-via) 50%, var(--bg-gradient-to) 100%);
-  background-size: 32px 32px, 100% 100%;
+  background-size: 100% 100%;
   background-attachment: scroll, fixed;
 }
 
@@ -61,21 +64,21 @@ h1, h2, h3, h4, h5, h6 {
 .glass-nav {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(37, 99, 235, 0.12);
+  border-bottom: 1px solid rgba(4, 118, 133, 0.12);
 }
 
 .glass-card {
   background: var(--card-bg);
   backdrop-filter: blur(12px);
   border: 1px solid var(--card-border);
-  box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.1), 0 1px 3px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 10px 30px -10px rgba(4, 118, 133, 0.1), 0 1px 3px rgba(0, 0, 0, 0.02);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(37, 99, 235, 0.4);
-  box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.15), 0 4px 6px -2px rgba(15, 23, 42, 0.03);
+  border-color: rgba(4, 118, 133, 0.4);
+  box-shadow: 0 20px 40px -15px rgba(4, 118, 133, 0.15), 0 4px 6px -2px rgba(15, 23, 42, 0.03);
 }
 
 /* Neon glow buttons */
@@ -137,9 +140,9 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--accent-primary);
 }
 
-/* Text glow effects */
+ /* Text glow effects */
 .text-glow {
-  text-shadow: 0 0 15px rgba(37, 99, 235, 0.25);
+  text-shadow: 0 0 15px rgba(4, 118, 133, 0.25);
 }
 
 /* Fade in up (levitation effect) for elements on load */
@@ -241,3 +244,26 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 1 !important;
   transform: translateX(3px) scale(1.15) !important;
 }
+
+/* Premium 3D Glossy Spheres */
+.sphere-glossy {
+  border-radius: 50%;
+  position: absolute;
+  pointer-events: none;
+}
+
+.sphere-purple-pink {
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f472b6 25%, #7c3aed 70%, #5b21b6 100%);
+  box-shadow: inset -8px -8px 20px rgba(0, 0, 0, 0.35), 0 20px 40px -10px rgba(124, 58, 237, 0.4);
+}
+
+.sphere-pink-purple {
+  background: radial-gradient(circle at 30% 30%, #ffffff 0%, #ffd6e8 25%, #ec4899 75%, #9d174d 100%);
+  box-shadow: inset -6px -6px 15px rgba(0, 0, 0, 0.3), 0 15px 30px -10px rgba(236, 72, 153, 0.3);
+}
+
+.sphere-cyan-blue {
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #bae6fd 20%, #06b6d4 70%, #0891b2 100%);
+  box-shadow: inset -6px -6px 12px rgba(0, 0, 0, 0.35), 0 15px 30px -10px rgba(6, 182, 212, 0.3);
+}
+

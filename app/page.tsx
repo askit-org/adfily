@@ -284,53 +284,74 @@ export default function HomePage() {
   };
 
   return (
-    <div className="space-y-32 pb-24 overflow-hidden">
+    <div className="space-y-32 pb-24 overflow-hidden relative">
+      {/* Static Ambient Background Elements */}
+      <div className="absolute inset-0 pointer-events-none -z-20 overflow-hidden select-none">
+        {/* Blob 1: Top Left (Accent Primary) */}
+        <div className="absolute top-[-5%] left-[-10%] w-[40vw] h-[40vw] min-w-[320px] max-w-[600px] rounded-full bg-accent-primary/10 blur-[130px]" />
+
+        {/* Blob 2: Middle Right (Accent Purple) */}
+        <div className="absolute top-[25%] right-[-10%] w-[45vw] h-[45vw] min-w-[350px] max-w-[700px] rounded-full bg-accent-purple/15 blur-[150px]" />
+
+        {/* Blob 3: Middle Left (Accent Primary) */}
+        <div className="absolute top-[50%] left-[-15%] w-[40vw] h-[40vw] min-w-[320px] max-w-[600px] rounded-full bg-accent-primary/10 blur-[140px]" />
+
+        {/* Blob 4: Bottom Right (Accent Purple Light) */}
+        <div className="absolute bottom-[10%] right-[-5%] w-[35vw] h-[35vw] min-w-[300px] max-w-[500px] rounded-full bg-accent-purple-light/20 blur-[120px]" />
+      </div>
       {/* 1. HERO SECTION */}
       <section
         id="home"
-        className="relative min-h-[90vh] flex items-center justify-center px-6 md:px-12 pt-8 scroll-mt-28"
+        className="relative min-h-[92vh] flex items-center justify-center px-6 md:px-12 pt-16 lg:pt-24 scroll-mt-28"
       >
-        {/* Glow backdrop decorative */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-accent-purple/15 rounded-full blur-[120px] pointer-events-none -z-10" />
+        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Left Column - Hero Copy */}
+          <div className="lg:col-span-7 text-left space-y-6 md:space-y-8 animate-fade-in-up">
+            {/* Main Heading H1 */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] text-foreground">
+              Digital Marketing <br />
+              Agency <br />
+              <span className="text-accent-primary">
+                That Helps Your <br />
+                Business Grow Online
+              </span>
+            </h1>
 
-        <div className="max-w-6xl mx-auto w-full text-center space-y-8 animate-fade-in-up">
-          {/* Slogan badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-primary/20 border border-accent-primary/45 text-xs font-semibold text-accent-secondary uppercase tracking-widest">
-            <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-            <span>Your Growth, Our Strategy.</span>
+            {/* Sub Heading */}
+            <p className="text-slate-600 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed">
+              At Adfily, we help businesses increase their online visibility,
+              generate quality leads, build brand authority, and drive
+              measurable growth through strategic digital marketing solutions.
+            </p>
+
+            {/* Call to Actions */}
+            <div className="flex flex-col sm:flex-row gap-4 items-center pt-2">
+              <a
+                href="#contact"
+                className="px-6 py-3.5 bg-accent-primary hover:bg-accent-primary/95 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto text-sm"
+              >
+                <span>Get In Touch With Us Today</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+              <a
+                href="#services"
+                className="px-6 py-3.5 border-2 border-accent-primary/60 text-foreground font-bold rounded-xl hover:bg-accent-primary/5 hover:scale-[1.02] transition-all duration-300 w-full sm:w-auto text-center text-sm"
+              >
+                Explore Services
+              </a>
+            </div>
           </div>
 
-          {/* Main Heading H1 */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.15] text-foreground max-w-4xl mx-auto">
-            Digital Marketing Agency <br className="hidden md:block" />
-            <span className="bg-gradient-to-r from-accent-secondary via-accent-primary to-accent-secondary bg-clip-text text-transparent text-glow">
-              That Helps Your Business
-            </span>{" "}
-            Grow Online
-          </h1>
+          {/* Right Column - Glossy Spheres (Only visible on lg screens and up) */}
+          <div className="hidden lg:flex lg:col-span-5 relative h-[480px] w-full items-center justify-center select-none animate-fade-in-up">
+            {/* Glossy Sphere 1: Large Purple/Pink */}
+            <div className="sphere-glossy sphere-purple-pink w-40 h-40 sm:w-48 sm:h-48 top-12 left-6 animate-ambient-slow" />
 
-          {/* Sub Heading */}
-          <p className="text-muted-silver text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            At Adfily, we help businesses increase their online visibility,
-            generate quality leads, build brand authority, and drive measurable
-            growth through strategic digital marketing solutions.
-          </p>
+            {/* Glossy Sphere 2: Medium Pink/Purple */}
+            <div className="sphere-glossy sphere-pink-purple w-24 h-24 sm:w-32 sm:h-32 top-4 right-12 animate-ambient-delayed" />
 
-          {/* Call to Actions */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-6">
-            <a
-              href="#contact"
-              className="btn-glow px-8 py-4 bg-gradient-to-r from-accent-secondary to-accent-primary text-white font-bold rounded-xl shadow-[0_4px_20px_rgba(37, 99, 235, 0.25)] hover:shadow-[0_4px_30px_rgba(37, 99, 235, 0.45)] transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto"
-            >
-              <span>Get In Touch With Us Today</span>
-              <ArrowRight className="w-5 h-5" />
-            </a>
-            <a
-              href="#services"
-              className="px-8 py-4 border border-accent-primary/50 hover:border-accent-primary/80 bg-accent-primary/10 hover:bg-accent-primary/20 text-accent-secondary font-bold shadow-sm font-bold rounded-xl transition-all duration-300 w-full sm:w-auto text-center"
-            >
-              Explore Services
-            </a>
+            {/* Glossy Sphere 3: Small Cyan/Blue */}
+            <div className="sphere-glossy sphere-cyan-blue w-16 h-16 sm:w-20 sm:h-20 bottom-16 left-20 animate-ambient-slow" />
           </div>
         </div>
       </section>
@@ -421,13 +442,13 @@ export default function HomePage() {
       >
         {/* Header Block */}
         <div className="text-center space-y-6 max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-primary/20 border border-accent-primary/45 text-xs font-semibold text-accent-secondary uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-purple/20 border border-accent-primary/45 text-xs font-semibold text-accent-secondary uppercase tracking-wider">
             <span>Our Expertise</span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-foreground">
             OUR SERVICES
           </h2>
-          <p className="text-foreground text-lg sm:text-xl font-bold bg-gradient-to-r from-accent-secondary to-accent-primary bg-clip-text text-transparent">
+          <p className="text-foreground text-lg sm:text-xl font-bold bg-gradient-to-r from-accent-secondary to-accent-purple bg-clip-text text-transparent">
             Digital Growth Solutions Tailored to Your Brand
           </p>
           <p className="text-muted-silver text-sm sm:text-base leading-relaxed">
@@ -449,8 +470,8 @@ export default function HomePage() {
                   onClick={() => setActiveServiceIndex(globalIdx)}
                   className={`w-full p-4 rounded-xl border text-left flex items-center gap-3.5 transition-all duration-300 cursor-pointer ${
                     isActive
-                      ? "bg-gradient-to-r from-accent-secondary to-accent-primary text-white border-transparent shadow-[0_8px_20px_rgba(177,129,33,0.2)] scale-[1.02]"
-                      : "bg-white/60 hover:bg-white/95 text-foreground border-accent-primary/10 hover:border-accent-primary/30 shadow-sm hover:scale-[1.01]"
+                      ? "bg-gradient-to-r from-accent-secondary to-accent-purple text-white border-transparent shadow-[0_8px_20px_rgba(177,129,33,0.2)] scale-[1.02]"
+                      : "bg-white/60 hover:bg-white/95 text-foreground border-accent-purple/10 hover:border-accent-primary/30 shadow-sm hover:scale-[1.01]"
                   }`}
                 >
                   <div
@@ -545,7 +566,7 @@ export default function HomePage() {
                     href="https://wa.me/919307967995"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-accent-secondary to-accent-primary text-white font-bold rounded-xl text-xs uppercase tracking-wider text-center shadow-[0_4px_12px_rgba(37,99,235,0.15)] hover:shadow-[0_4px_22px_rgba(37,99,235,0.35)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-accent-secondary to-accent-purple text-white font-bold rounded-xl text-xs uppercase tracking-wider text-center shadow-[0_4px_12px_rgba(37,99,235,0.15)] hover:shadow-[0_4px_22px_rgba(37,99,235,0.35)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Consult on WhatsApp</span>
                     <ArrowRight className="w-4 h-4" />
@@ -724,16 +745,12 @@ export default function HomePage() {
                 {/* Step Card */}
                 <div className="flex flex-col items-center text-center group flex-1 relative z-10 px-2">
                   {/* Circle step containing icon */}
-                  <div className="relative w-24 h-24 rounded-full bg-gradient-to-tr from-accent-primary to-accent-primary/80 text-white flex items-center justify-center shadow-[0_10px_30px_rgba(177,129,33,0.3)] border-4 border-white transition-all duration-300 group-hover:scale-110">
+                  <div className="relative w-24 h-24 rounded-full bg-gradient-to-tr from-accent-primary to-accent-primary/80 text-white flex items-center justify-center border-4 border-white transition-all duration-300 group-hover:scale-110">
                     {getIcon(idx)}
-                    {/* Step number badge overlapping on the right */}
-                    <span className="absolute -right-1 top-6 w-7 h-7 rounded-full bg-accent-secondary text-white font-syne font-black text-xs flex items-center justify-center border-2 border-white shadow-md">
-                      {String(idx + 1).padStart(2, "0")}
-                    </span>
                   </div>
 
                   {/* Text Content */}
-                  <h3 className="font-syne font-black text-lg text-foreground mt-8 group-hover:text-accent-primary transition-colors duration-200">
+                  <h3 className="font-syne font-black text-lg text-foreground mt-6 group-hover:text-accent-primary transition-colors duration-200">
                     {step.title}
                   </h3>
                   <p className="text-muted-silver text-xs leading-relaxed mt-3 max-w-[180px]">
@@ -772,78 +789,46 @@ export default function HomePage() {
           })}
         </div>
 
-        {/* Mobile View: Horizontal Scrollable/Swipeable Process Timeline */}
-        <div className="lg:hidden flex overflow-x-auto gap-6 pb-8 px-6 -mx-6 snap-x snap-mandatory scrollbar-none scroll-smooth relative items-start">
-          {/* Connecting line for mobile */}
-          <div className="absolute top-[48px] left-12 w-[160%] h-[3px] bg-slate-100 -z-10" />
+        {/* Mobile View: Vertical Process Timeline (Mobile & Tablet) */}
+        <div className="lg:hidden relative flex flex-col gap-10 mt-10 px-4">
+          {/* Vertical connecting line */}
+          <div className="absolute left-[36px] top-8 bottom-8 w-[3px] bg-slate-100 -z-10" />
 
           {howWeWork.map((step, idx) => {
             const getIcon = (i: number) => {
               switch (i) {
                 case 0:
-                  return <Target className="w-8 h-8 text-white" />;
+                  return <Target className="w-6 h-6 text-white" />;
                 case 1:
-                  return <Map className="w-8 h-8 text-white" />;
+                  return <Map className="w-6 h-6 text-white" />;
                 case 2:
-                  return <Zap className="w-8 h-8 text-white" />;
+                  return <Zap className="w-6 h-6 text-white" />;
                 case 3:
-                  return <TrendingUp className="w-8 h-8 text-white" />;
+                  return <TrendingUp className="w-6 h-6 text-white" />;
                 case 4:
-                  return <Flame className="w-8 h-8 text-white" />;
+                  return <Flame className="w-6 h-6 text-white" />;
                 default:
-                  return <Target className="w-8 h-8 text-white" />;
+                  return <Target className="w-6 h-6 text-white" />;
               }
             };
 
             return (
-              <React.Fragment key={idx}>
-                {/* Step Card */}
-                <div className="snap-center shrink-0 w-[70vw] sm:w-[280px] flex flex-col items-center text-center group relative z-10 px-2">
-                  {/* Circle step containing icon */}
-                  <div className="relative w-24 h-24 rounded-full bg-gradient-to-tr from-accent-primary to-accent-primary/80 text-white flex items-center justify-center shadow-[0_10px_30px_rgba(177,129,33,0.25)] border-4 border-white transition-all duration-300">
-                    {getIcon(idx)}
-                    {/* Step number badge overlapping on the right */}
-                    <span className="absolute -right-1 top-6 w-7 h-7 rounded-full bg-accent-secondary text-white font-syne font-black text-xs flex items-center justify-center border-2 border-white shadow-md">
-                      {String(idx + 1).padStart(2, "0")}
-                    </span>
-                  </div>
+              <div key={idx} className="flex items-center gap-6 text-left group">
+                {/* Circle step containing icon */}
+                <div className="relative w-16 h-16 rounded-full bg-gradient-to-tr from-accent-primary to-accent-primary/80 text-white flex items-center justify-center border-4 border-white shadow-md flex-shrink-0">
+                  {getIcon(idx)}
+                </div>
 
-                  {/* Text Content */}
-                  <h3 className="font-syne font-black text-base text-foreground mt-6">
+                {/* Text Content */}
+                <div>
+                  <h3 className="font-syne font-black text-base text-foreground group-hover:text-accent-primary transition-colors duration-200">
                     {step.title}
                   </h3>
-                  <p className="text-muted-silver text-xs leading-relaxed mt-2">
+                  <p className="text-muted-silver text-xs leading-relaxed mt-1">
                     {step.desc}
                   </p>
                 </div>
-
-                {/* Animated Arrow Connector (Only between steps) */}
-                {idx < howWeWork.length - 1 && (
-                  <div className="flex items-center justify-center h-24 relative z-10 px-2 shrink-0">
-                    <svg
-                      className="w-20 h-6 text-slate-300 transition-all duration-300 ease-out animate-arrow-flow cursor-pointer"
-                      viewBox="0 0 80 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      style={{ animationDelay: `${idx * 0.3}s` }}
-                    >
-                      <path
-                        d="M 4 12 L 76 12"
-                        stroke="currentColor"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                      />
-                      <path
-                        d="M 66 5 L 76 12 L 66 19"
-                        stroke="currentColor"
-                        strokeWidth="3"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                )}
-              </React.Fragment>
+              </div>
             );
           })}
         </div>
@@ -908,231 +893,201 @@ export default function HomePage() {
           </div>
 
           {!isSubmitted ? (
-            <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
+            <form
+              onSubmit={handleSubmit}
+              className="grid grid-cols-1 md:grid-cols-3 gap-4 relative z-10"
+            >
               {errorMsg && (
-                <div className="text-xs text-red-400 font-semibold bg-red-400/5 p-3 rounded-xl border border-red-400/10">
+                <div className="md:col-span-3 text-xs text-red-400 font-semibold bg-red-400/5 p-3 rounded-xl border border-red-400/10">
                   {errorMsg}
                 </div>
               )}
 
-              {/* Section: Personal Details */}
-              <div className="space-y-4">
-                <h4 className="text-xs font-extrabold uppercase tracking-widest text-accent-secondary border-b border-accent-primary/25 pb-1">
-                  Personal Details
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="fullName"
-                      value={formData.fullName}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-accent-primary/4 border border-accent-primary/30 rounded-xl text-sm text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
-                      placeholder="e.g. Jane Doe"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-accent-primary/4 border border-accent-primary/30 rounded-xl text-sm text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
-                      placeholder="e.g. jane@example.com"
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-accent-primary/4 border border-accent-primary/30 rounded-xl text-sm text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
-                      placeholder="e.g. +91 9876543210"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                      City *
-                    </label>
-                    <input
-                      type="text"
-                      name="city"
-                      value={formData.city}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-accent-primary/4 border border-accent-primary/30 rounded-xl text-sm text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
-                      placeholder="e.g. Pune"
-                      required
-                    />
-                  </div>
-                </div>
+              {/* Row 1: Personal Info */}
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                  Full Name *
+                </label>
+                <input
+                  type="text"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 bg-accent-primary/4 border border-accent-primary/20 rounded-xl text-xs text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
+                  placeholder="e.g. Jane Doe"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                  Email Address *
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 bg-accent-primary/4 border border-accent-primary/20 rounded-xl text-xs text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
+                  placeholder="e.g. jane@example.com"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                  Phone Number *
+                </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 bg-accent-primary/4 border border-accent-primary/20 rounded-xl text-xs text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
+                  placeholder="e.g. +91 9876543210"
+                  required
+                />
               </div>
 
-              {/* Section: Social Media Details */}
-              <div className="space-y-4 pt-2">
-                <h4 className="text-xs font-extrabold uppercase tracking-widest text-accent-secondary border-b border-accent-primary/25 pb-1">
-                  Social Media Details
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                      Instagram Username *
-                    </label>
-                    <input
-                      type="text"
-                      name="instagramUsername"
-                      value={formData.instagramUsername}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-accent-primary/4 border border-accent-primary/30 rounded-xl text-sm text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
-                      placeholder="e.g. @janedoe"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                      Total Followers *
-                    </label>
-                    <input
-                      type="text"
-                      name="totalFollowers"
-                      value={formData.totalFollowers}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-accent-primary/4 border border-accent-primary/30 rounded-xl text-sm text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
-                      placeholder="e.g. 50K"
-                      required
-                    />
-                  </div>
-                </div>
+              {/* Row 2: Location & Social */}
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                  City *
+                </label>
+                <input
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 bg-accent-primary/4 border border-accent-primary/20 rounded-xl text-xs text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
+                  placeholder="e.g. Pune"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                  Instagram Username *
+                </label>
+                <input
+                  type="text"
+                  name="instagramUsername"
+                  value={formData.instagramUsername}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 bg-accent-primary/4 border border-accent-primary/20 rounded-xl text-xs text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
+                  placeholder="e.g. @janedoe"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                  Total Followers *
+                </label>
+                <input
+                  type="text"
+                  name="totalFollowers"
+                  value={formData.totalFollowers}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 bg-accent-primary/4 border border-accent-primary/20 rounded-xl text-xs text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
+                  placeholder="e.g. 50K"
+                  required
+                />
+              </div>
+
+              {/* Row 3: Niche, Views, Charges */}
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                  Niche / Category *
+                </label>
+                <input
+                  type="text"
+                  name="nicheCategory"
+                  value={formData.nicheCategory}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 bg-accent-primary/4 border border-accent-primary/20 rounded-xl text-xs text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
+                  placeholder="e.g. Fashion, Tech"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                  Average Reel Views *
+                </label>
+                <input
+                  type="text"
+                  name="avgReelViews"
+                  value={formData.avgReelViews}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 bg-accent-primary/4 border border-accent-primary/20 rounded-xl text-xs text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
+                  placeholder="e.g. 25K"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                  Expected Charges *
+                </label>
+                <input
+                  type="text"
+                  name="expectedCharges"
+                  value={formData.expectedCharges}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 bg-accent-primary/4 border border-accent-primary/20 rounded-xl text-xs text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
+                  placeholder="e.g. ₹5,000"
+                  required
+                />
+              </div>
+
+              {/* Row 4: Bio & Links */}
+              <div className="md:col-span-2">
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                  Tell Us About Yourself *
+                </label>
+                <textarea
+                  name="aboutYourself"
+                  value={formData.aboutYourself}
+                  onChange={handleChange}
+                  className="w-full h-[76px] px-3 py-2 bg-accent-primary/4 border border-accent-primary/20 rounded-xl text-xs text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all resize-none shadow-sm"
+                  placeholder="Tell us about your content creation journey..."
+                  required
+                />
+              </div>
+              <div className="flex flex-col gap-2">
                 <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                    Other Social Media Links (Optional)
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-0.5">
+                    Other Links (Optional)
                   </label>
                   <input
                     type="text"
                     name="otherSocialLinks"
                     value={formData.otherSocialLinks}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-accent-primary/4 border border-accent-primary/30 rounded-xl text-sm text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
-                    placeholder="e.g. YouTube, TikTok, or LinkedIn links"
+                    className="w-full px-3 py-1.5 bg-accent-primary/4 border border-accent-primary/20 rounded-xl text-xs text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
+                    placeholder="e.g. YouTube, TikTok"
                   />
                 </div>
-              </div>
-
-              {/* Section: Content Information */}
-              <div className="space-y-4 pt-2">
-                <h4 className="text-xs font-extrabold uppercase tracking-widest text-accent-secondary border-b border-accent-primary/25 pb-1">
-                  Content Information
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                      Niche / Category *
-                    </label>
-                    <input
-                      type="text"
-                      name="nicheCategory"
-                      value={formData.nicheCategory}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-accent-primary/4 border border-accent-primary/30 rounded-xl text-sm text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
-                      placeholder="e.g. Fashion, Tech, Travel"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                      Average Reel Views *
-                    </label>
-                    <input
-                      type="text"
-                      name="avgReelViews"
-                      value={formData.avgReelViews}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-accent-primary/4 border border-accent-primary/30 rounded-xl text-sm text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
-                      placeholder="e.g. 25K"
-                      required
-                    />
-                  </div>
-                </div>
                 <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                    Previous Brand Collaborations (Optional)
+                  <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-0.5">
+                    Prev Collaborations (Optional)
                   </label>
                   <input
                     type="text"
                     name="prevCollaborations"
                     value={formData.prevCollaborations}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 bg-accent-primary/4 border border-accent-primary/30 rounded-xl text-sm text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
-                    placeholder="e.g. Brand A, Brand B, Brand C"
+                    className="w-full px-3 py-1.5 bg-accent-primary/4 border border-accent-primary/20 rounded-xl text-xs text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
+                    placeholder="e.g. Brand A, Brand B"
                   />
                 </div>
               </div>
 
-              {/* Section: Collaboration & Extra */}
-              <div className="space-y-4 pt-2">
-                <h4 className="text-xs font-extrabold uppercase tracking-widest text-accent-secondary border-b border-accent-primary/25 pb-1">
-                  Collaboration Details
-                </h4>
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                    Expected Charges per Reel/Post *
-                  </label>
-                  <input
-                    type="text"
-                    name="expectedCharges"
-                    value={formData.expectedCharges}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-accent-primary/4 border border-accent-primary/30 rounded-xl text-sm text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all shadow-sm"
-                    placeholder="e.g. ₹5,000 / $100"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-4 pt-2">
-                <h4 className="text-xs font-extrabold uppercase tracking-widest text-accent-secondary border-b border-accent-primary/25 pb-1">
-                  Additional Information
-                </h4>
-                <div>
-                  <label className="block text-[10px] font-bold uppercase tracking-wider text-muted-silver mb-1.5">
-                    Tell Us About Yourself *
-                  </label>
-                  <textarea
-                    name="aboutYourself"
-                    value={formData.aboutYourself}
-                    onChange={handleChange}
-                    className="w-full h-32 px-4 py-3 bg-accent-primary/4 border border-accent-primary/30 rounded-xl text-sm text-foreground focus:outline-none focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/20 transition-all resize-none shadow-sm"
-                    placeholder="Share your content creation journey, style, and what makes your audience unique..."
-                    required
-                  />
-                </div>
-              </div>
-
+              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-4 bg-gradient-to-r from-accent-secondary to-accent-primary text-white font-extrabold rounded-xl text-xs uppercase tracking-widest shadow-[0_4px_15px_rgba(37, 99, 235, 0.15)] hover:shadow-[0_4px_25px_rgba(37, 99, 235, 0.35)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                className="md:col-span-3 w-full py-3 mt-2 bg-gradient-to-r from-accent-secondary to-accent-purple text-white font-extrabold rounded-xl text-xs uppercase tracking-widest shadow-md hover:scale-[1.01] transition-all cursor-pointer flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <span>Submitting...</span>
                 ) : (
-                  <>
-                    <span>🚀 Join Our Influencer Network</span>
-                  </>
+                  <span>🚀 Join Our Influencer Network</span>
                 )}
               </button>
             </form>
@@ -1261,7 +1216,7 @@ export default function HomePage() {
                     href="https://www.instagram.com/adfily?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-50 border border-slate-200 hover:border-accent-secondary text-foreground hover:bg-slate-100 shadow-sm transition-colors"
+                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-50 border border-slate-200 hover:border-[#E1306C] hover:text-[#E1306C] hover:bg-[#E1306C]/5 text-foreground shadow-sm transition-all duration-300 hover:scale-[1.02]"
                   >
                     Instagram
                   </a>
@@ -1269,7 +1224,7 @@ export default function HomePage() {
                     href="https://www.facebook.com/share/1DsmWfvy3F/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-50 border border-slate-200 hover:border-accent-secondary text-foreground hover:bg-slate-100 shadow-sm transition-colors"
+                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-50 border border-slate-200 hover:border-[#1877F2] hover:text-[#1877F2] hover:bg-[#1877F2]/5 text-foreground shadow-sm transition-all duration-300 hover:scale-[1.02]"
                   >
                     Facebook
                   </a>
@@ -1277,7 +1232,7 @@ export default function HomePage() {
                     href="https://www.linkedin.com/company/adfily/about/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-50 border border-slate-200 hover:border-accent-secondary text-foreground hover:bg-slate-100 shadow-sm transition-colors"
+                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-50 border border-slate-200 hover:border-[#0A66C2] hover:text-[#0A66C2] hover:bg-[#0A66C2]/5 text-foreground shadow-sm transition-all duration-300 hover:scale-[1.02]"
                   >
                     LinkedIn
                   </a>
@@ -1309,7 +1264,7 @@ export default function HomePage() {
             <a
               href="#register"
               onClick={() => setShowInfluencerPopup(false)}
-              className="px-4 py-1.5 bg-gradient-to-r from-accent-secondary to-accent-primary text-white text-[10px] font-black rounded-lg uppercase tracking-wider shadow-[0_2px_8px_rgba(177,129,33,0.15)] hover:shadow-[0_2px_12px_rgba(177,129,33,0.3)] transition-all cursor-pointer flex items-center gap-1"
+              className="px-4 py-1.5 bg-gradient-to-r from-accent-secondary to-accent-purple text-white text-[10px] font-black rounded-lg uppercase tracking-wider shadow-[0_2px_8px_rgba(177,129,33,0.15)] hover:shadow-[0_2px_12px_rgba(177,129,33,0.3)] transition-all cursor-pointer flex items-center gap-1"
             >
               <span>Apply Now</span>
               <ArrowRight className="w-3.5 h-3.5" />

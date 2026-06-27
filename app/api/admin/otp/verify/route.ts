@@ -1,13 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/lib/supabase';
+import crypto from 'crypto';
+
+const ALGORITHM = 'aes-256-cbc';
+const SECRET_KEY = process.env.OTP_SECRET || 'a_very_secure_32_byte_secret_key_12345';
+
+function encrypt(text: string): string {
+  const key = crypto.scryptSync(SECRET_KEY, 'salt', 32);
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv(ALGORITHM, key, iv);
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return `${iv.toString('hex')}:${encrypted}`;
+}
+
+function decrypt(text: string): string {
+  try {
+    const [ivHex, encryptedHex] = text.split(':');
+    const iv = Buffer.from(ivHex, 'hex');
+    const key = crypto.scryptSync(SECRET_KEY, 'salt', 32);
+    const decipher = crypto.createDecipheriv(ALGORITHM, key, iv);
+    let decrypted = decipher.update(encryptedHex, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+  } catch (error) {
+    throw new Error('Failed to decrypt OTP payload.');
+  }
+}
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, otp } = await req.json();
+    const { email, otp, encryptedOtp } = await req.json();
 
-    if (!email || !otp) {
+    if (!email || !otp || !encryptedOtp) {
       return NextResponse.json(
-        { error: 'Email and OTP are required.' },
+        { error: 'Email, OTP input, and encrypted token are required.' },
         { status: 400 }
       );
     }
@@ -19,69 +45,40 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Fetch latest OTP for this email
-    const { data: otpRecords, error: otpError } = await supabaseAdmin
-      .from('admin_otps')
-      .select('*')
-      .eq('email', email)
-      .order('created_at', { ascending: false })
-      .limit(1);
-
-    if (otpError) {
-      console.error('Supabase DB error fetching OTP:', otpError);
+    // Decrypt the encrypted OTP token
+    let payload: { email: string; otp: string; expiresAt: number };
+    try {
+      const decrypted = decrypt(encryptedOtp);
+      payload = JSON.parse(decrypted);
+    } catch (err) {
       return NextResponse.json(
-        { error: 'Error validating OTP.' },
-        { status: 500 }
-      );
-    }
-
-    if (!otpRecords || otpRecords.length === 0) {
-      return NextResponse.json(
-        { error: 'No OTP generated for this email. Please request a new one.' },
+        { error: 'Invalid verification token. Please request a new code.' },
         { status: 400 }
       );
     }
 
-    const record = otpRecords[0];
-
-    // Check match
-    if (record.otp !== otp.trim()) {
+    // Verify token integrity and matches
+    if (payload.email !== email || payload.otp !== otp.trim()) {
       return NextResponse.json(
         { error: 'Invalid OTP code. Please check and try again.' },
         { status: 400 }
       );
     }
 
-    // Check expiration
-    const expiry = new Date(record.expires_at);
-    if (new Date() > expiry) {
+    // Verify expiration timestamp
+    if (Date.now() > payload.expiresAt) {
       return NextResponse.json(
         { error: 'OTP has expired. Please request a new verification code.' },
         { status: 400 }
       );
     }
 
-    // Create session in Supabase admin_sessions
-    const sessionExpiry = new Date(Date.now() + 60 * 60 * 1000); // 1 hour session duration
-    const { data: sessionRecords, error: sessionError } = await supabaseAdmin
-      .from('admin_sessions')
-      .insert([
-        {
-          email,
-          expires_at: sessionExpiry.toISOString(),
-        },
-      ])
-      .select();
-
-    if (sessionError || !sessionRecords || sessionRecords.length === 0) {
-      console.error('Supabase DB error inserting session:', sessionError);
-      return NextResponse.json(
-        { error: 'Failed to establish admin session.' },
-        { status: 500 }
-      );
-    }
-
-    const token = sessionRecords[0].token;
+    // Create encrypted session token (stateless session)
+    const sessionExpiryTime = Date.now() + 60 * 60 * 1000; // 1 hour session duration
+    const sessionToken = encrypt(JSON.stringify({
+      email,
+      expiresAt: sessionExpiryTime
+    }));
 
     // Set secure HttpOnly cookie containing session token
     const response = NextResponse.json(
@@ -90,14 +87,8 @@ export async function POST(req: NextRequest) {
     );
     response.headers.set(
       'Set-Cookie',
-      `admin_session=${token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=3600`
+      `admin_session=${sessionToken}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=3600`
     );
-
-    // Clean up used OTP
-    await supabaseAdmin
-      .from('admin_otps')
-      .delete()
-      .eq('id', record.id);
 
     return response;
   } catch (err: any) {
