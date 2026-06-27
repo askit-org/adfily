@@ -302,11 +302,23 @@ export default function HomePage() {
       {/* 1. HERO SECTION */}
       <section
         id="home"
-        className="relative min-h-[92vh] flex items-center justify-center px-6 md:px-12 pt-16 lg:pt-24 scroll-mt-28"
+        className="relative min-h-[92vh] flex items-center justify-center px-6 md:px-12 pt-16 lg:pt-24 scroll-mt-28 overflow-hidden z-10"
       >
+        {/* Floating Glossy Spheres in the background for Mobile/Tablet */}
+        <div className="lg:hidden absolute inset-0 pointer-events-none -z-10 select-none">
+          {/* Glossy Sphere 1: Large Purple/Pink (Top Right area) */}
+          <div className="sphere-glossy sphere-purple-pink w-32 h-32 absolute top-[8%] right-[5%] opacity-35 animate-ambient-slow" />
+
+          {/* Glossy Sphere 2: Medium Pink/Purple (Middle Left area) */}
+          <div className="sphere-glossy sphere-pink-purple w-24 h-24 absolute top-[40%] left-[8%] opacity-40 animate-ambient-delayed" />
+
+          {/* Glossy Sphere 3: Small Cyan/Blue (Bottom Right area) */}
+          <div className="sphere-glossy sphere-cyan-blue w-20 h-20 absolute bottom-[12%] right-[12%] opacity-40 animate-ambient-slow" />
+        </div>
+
         <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column - Hero Copy */}
-          <div className="lg:col-span-7 text-left space-y-6 md:space-y-8 animate-fade-in-up">
+          <div className="lg:col-span-7 text-left space-y-6 md:space-y-8 animate-fade-in-up relative z-10">
             {/* Main Heading H1 */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] text-foreground">
               Digital Marketing <br />
@@ -328,7 +340,7 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 items-center pt-2">
               <a
                 href="#contact"
-                className="px-6 py-3.5 bg-accent-primary hover:bg-accent-primary/95 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto text-sm"
+                className="px-6 py-3.5 bg-gradient-to-r from-accent-secondary to-accent-purple hover:bg-accent-primary/95 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto text-sm"
               >
                 <span>Get In Touch With Us Today</span>
                 <ArrowRight className="w-4 h-4" />
@@ -813,7 +825,10 @@ export default function HomePage() {
             };
 
             return (
-              <div key={idx} className="flex items-center gap-6 text-left group">
+              <div
+                key={idx}
+                className="flex items-center gap-6 text-left group"
+              >
                 {/* Circle step containing icon */}
                 <div className="relative w-16 h-16 rounded-full bg-gradient-to-tr from-accent-primary to-accent-primary/80 text-white flex items-center justify-center border-4 border-white shadow-md flex-shrink-0">
                   {getIcon(idx)}
@@ -1142,16 +1157,16 @@ export default function HomePage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <a
                   href="mailto:info@adfily.com"
-                  className="flex items-center gap-4 p-4 rounded-2xl border border-accent-primary/25 bg-gradient-to-br from-accent-primary/8 via-white/50 to-accent-secondary/4 shadow-sm hover:border-accent-secondary/35 transition-colors group"
+                  className="flex items-center gap-4 p-4 rounded-2xl border border-[#EA4335]/20 bg-[#EA4335]/4 shadow-sm hover:border-[#EA4335]/50 transition-all duration-300 group"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-accent-secondary/10 flex items-center justify-center text-accent-secondary">
+                  <div className="w-10 h-10 rounded-xl bg-[#EA4335]/10 flex items-center justify-center text-[#EA4335] flex-shrink-0">
                     <Mail className="w-5 h-5" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <span className="block text-[10px] uppercase font-bold text-muted-silver">
                       Email Us
                     </span>
-                    <span className="text-sm font-semibold text-foreground group-hover:text-accent-secondary transition-colors">
+                    <span className="text-sm font-semibold text-[#EA4335] break-all">
                       info@adfily.com
                     </span>
                   </div>
@@ -1159,25 +1174,25 @@ export default function HomePage() {
 
                 <a
                   href="tel:+919307967995"
-                  className="flex items-center gap-4 p-4 rounded-2xl border border-accent-primary/25 bg-gradient-to-br from-accent-primary/8 via-white/50 to-accent-secondary/4 shadow-sm hover:border-accent-secondary/35 transition-colors group"
+                  className="flex items-center gap-4 p-4 rounded-2xl border border-[#25D366]/20 bg-[#25D366]/4 shadow-sm hover:border-[#25D366]/50 transition-all duration-300 group"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-accent-secondary/10 flex items-center justify-center text-accent-secondary">
+                  <div className="w-10 h-10 rounded-xl bg-[#25D366]/10 flex items-center justify-center text-[#25D366] flex-shrink-0">
                     <Phone className="w-5 h-5" />
                   </div>
-                  <div>
+                  <div className="min-w-0">
                     <span className="block text-[10px] uppercase font-bold text-muted-silver">
                       Call Us
                     </span>
-                    <span className="text-sm font-semibold text-foreground group-hover:text-accent-secondary transition-colors">
+                    <span className="text-sm font-semibold text-[#25D366] break-all">
                       +91 9307967995
                     </span>
                   </div>
                 </a>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex items-start gap-4 p-4 rounded-2xl border border-accent-primary/25 bg-gradient-to-br from-accent-primary/8 via-white/50 to-accent-secondary/4 shadow-sm">
-                  <div className="w-10 h-10 rounded-xl bg-accent-secondary/10 flex items-center justify-center text-accent-secondary flex-shrink-0 mt-0.5">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="flex items-start gap-4 p-4 rounded-2xl border border-[#4285F4]/20 bg-[#4285F4]/4 shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-[#4285F4]/10 flex items-center justify-center text-[#4285F4] flex-shrink-0 mt-0.5">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
@@ -1190,8 +1205,8 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 p-4 rounded-2xl border border-accent-primary/25 bg-gradient-to-br from-accent-primary/8 via-white/50 to-accent-secondary/4 shadow-sm">
-                  <div className="w-10 h-10 rounded-xl bg-accent-secondary/10 flex items-center justify-center text-accent-secondary flex-shrink-0 mt-0.5">
+                <div className="flex items-start gap-4 p-4 rounded-2xl border border-[#EA4335]/20 bg-[#EA4335]/4 shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-[#EA4335]/10 flex items-center justify-center text-[#EA4335] flex-shrink-0 mt-0.5">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
@@ -1199,8 +1214,7 @@ export default function HomePage() {
                       Delhi Address
                     </span>
                     <span className="text-sm font-semibold text-foreground leading-relaxed">
-                      Block no. 14, Nearby metro Mayur Vihar Phase 1, Delhi
-                      110091
+                      Block no. 14, Nearby metro Mayur Vihar Phase 1, Delhi 110091
                     </span>
                   </div>
                 </div>
@@ -1211,12 +1225,12 @@ export default function HomePage() {
                 <span className="block text-[10px] uppercase font-bold text-muted-silver mb-3">
                   Connect on Social
                 </span>
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-3">
                   <a
                     href="https://www.instagram.com/adfily?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-50 border border-slate-200 hover:border-[#E1306C] hover:text-[#E1306C] hover:bg-[#E1306C]/5 text-foreground shadow-sm transition-all duration-300 hover:scale-[1.02]"
+                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-[#E1306C]/5 border border-[#E1306C]/30 text-[#E1306C] hover:bg-[#E1306C]/10 hover:border-[#E1306C] shadow-sm transition-all duration-300 hover:scale-[1.02] flex items-center justify-center"
                   >
                     Instagram
                   </a>
@@ -1224,7 +1238,7 @@ export default function HomePage() {
                     href="https://www.facebook.com/share/1DsmWfvy3F/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-50 border border-slate-200 hover:border-[#1877F2] hover:text-[#1877F2] hover:bg-[#1877F2]/5 text-foreground shadow-sm transition-all duration-300 hover:scale-[1.02]"
+                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-[#1877F2]/5 border border-[#1877F2]/30 text-[#1877F2] hover:bg-[#1877F2]/10 hover:border-[#1877F2] shadow-sm transition-all duration-300 hover:scale-[1.02] flex items-center justify-center"
                   >
                     Facebook
                   </a>
@@ -1232,7 +1246,7 @@ export default function HomePage() {
                     href="https://www.linkedin.com/company/adfily/about/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-50 border border-slate-200 hover:border-[#0A66C2] hover:text-[#0A66C2] hover:bg-[#0A66C2]/5 text-foreground shadow-sm transition-all duration-300 hover:scale-[1.02]"
+                    className="px-4 py-2 text-xs font-semibold rounded-xl bg-[#0A66C2]/5 border border-[#0A66C2]/30 text-[#0A66C2] hover:bg-[#0A66C2]/10 hover:border-[#0A66C2] shadow-sm transition-all duration-300 hover:scale-[1.02] flex items-center justify-center"
                   >
                     LinkedIn
                   </a>
