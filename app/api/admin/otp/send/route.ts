@@ -1,6 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/lib/supabase';
 import nodemailer from 'nodemailer';
+import crypto from 'crypto';
+
+const ALGORITHM = 'aes-256-cbc';
+const SECRET_KEY = process.env.OTP_SECRET || 'a_very_secure_32_byte_secret_key_12345';
+
+function encrypt(text: string): string {
+  const key = crypto.scryptSync(SECRET_KEY, 'salt', 32);
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv(ALGORITHM, key, iv);
+  let encrypted = cipher.update(text, 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  return `${iv.toString('hex')}:${encrypted}`;
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -18,42 +30,33 @@ export async function POST(req: NextRequest) {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes expiration
 
-    // Save OTP to Supabase
-    const { error: dbError } = await supabaseAdmin
-      .from('admin_otps')
-      .insert([
-        {
-          email,
-          otp,
-          expires_at: expiresAt.toISOString(),
-        },
-      ]);
-
-    if (dbError) {
-      console.error('Supabase DB error saving OTP:', dbError);
-      return NextResponse.json(
-        { error: 'Failed to generate verification OTP.' },
-        { status: 500 }
-      );
-    }
+    // Encrypt OTP and expiration timestamp
+    const payload = JSON.stringify({
+      email,
+      otp,
+      expiresAt: expiresAt.getTime()
+    });
+    const encryptedOtp = encrypt(payload);
 
     // Log the OTP to terminal for verification/debugging/setup convenience
     console.log(`[ADMIN OTP] Generated OTP for adfilyofficial@gmail.com: ${otp} (expires at: ${expiresAt.toLocaleTimeString()})`);
 
-    // Retrieve SMTP configurations
-    const host = process.env.SMTP_HOST;
-    const port = parseInt(process.env.SMTP_PORT || '587', 10);
-    const secure = process.env.SMTP_SECURE === 'true' || port === 465;
+    // Retrieve SMTP configurations (Gmail defaults hardcoded, user/pass from env)
+    const host = 'smtp.gmail.com';
+    const port = 465;
+    const secure = true;
     const user = process.env.SMTP_USER;
     const pass = process.env.SMTP_PASS;
-    const from = process.env.SMTP_FROM || user;
+    const from = user;
 
-    if (!host || !user || !pass) {
-      console.warn('SMTP environment variables are not fully configured. OTP sent successfully to console log.');
+    if (!user || !pass) {
+      console.warn('SMTP user/password environment variables are not configured. OTP sent successfully to console log.');
       return NextResponse.json(
         { 
           message: 'OTP generated successfully. (Note: SMTP not configured, OTP printed to server console for testing.)',
-          devMode: true
+          devMode: true,
+          otp: otp,
+          encryptedOtp: encryptedOtp
         },
         { status: 200 }
       );
@@ -89,7 +92,11 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { message: 'Verification OTP sent successfully to your email.' },
+      { 
+        message: 'Verification OTP sent successfully to your email.',
+        otp: otp,
+        encryptedOtp: encryptedOtp
+      },
       { status: 200 }
     );
   } catch (err: any) {

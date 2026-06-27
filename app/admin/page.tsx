@@ -91,6 +91,12 @@ export default function AdminPage() {
         throw new Error(data.error || "Failed to send OTP.");
       }
 
+      if (data.otp) {
+        localStorage.setItem("admin_otp", data.otp);
+      }
+      if (data.encryptedOtp) {
+        localStorage.setItem("admin_encrypted_otp", data.encryptedOtp);
+      }
       setSuccessMsg(data.message || "OTP sent successfully.");
       setPhase("otp");
     } catch (err: any) {
@@ -112,12 +118,28 @@ export default function AdminPage() {
       return;
     }
 
+    const storedOtp = localStorage.getItem("admin_otp");
+    if (storedOtp && otp.trim() !== storedOtp) {
+      setErrorMsg("Invalid OTP code. Please check and try again.");
+      return;
+    }
+
+    const storedEncryptedOtp = localStorage.getItem("admin_encrypted_otp");
+    if (!storedEncryptedOtp) {
+      setErrorMsg("No verification token found. Please request a new OTP code.");
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await fetch("/api/admin/otp/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email.trim(), otp: otp.trim() }),
+        body: JSON.stringify({
+          email: email.trim(),
+          otp: otp.trim(),
+          encryptedOtp: storedEncryptedOtp,
+        }),
       });
       const data = await res.json();
 

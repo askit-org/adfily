@@ -104,9 +104,10 @@ export default function Navbar() {
             <Image
               src="/adfily-logo.jpeg"
               alt="Adfily Logo"
-              width={60}
-              height={60}
-              className="rounded-lg object-cover shadow-[0_0_15px_rgba(37,99,235,0.35)] group-hover:scale-110 transition-transform duration-300"
+              width={50}
+              height={50}
+              priority
+              className="rounded-xl object-cover shadow-[0_0_10px_rgba(124,58,237,0.15)] transition-transform duration-300 group-hover:scale-105"
             />
           </Link>
 
@@ -122,13 +123,13 @@ export default function Navbar() {
                   href={item.path}
                   className={`text-sm font-medium tracking-wide transition-all duration-300 relative py-1 ${
                     isActive
-                      ? "text-accent-secondary font-semibold"
+                      ? "text-foreground font-semibold"
                       : "text-muted-silver hover:text-foreground"
                   }`}
                 >
                   {item.name}
                   {isActive && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-accent-primary to-accent-secondary rounded-full shadow-[0_0_10px_rgba(37,99,235,0.55)]" />
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent-primary rounded-full" />
                   )}
                 </Link>
               );
@@ -141,27 +142,27 @@ export default function Navbar() {
               href="https://wa.me/919307967995"
               target="_blank"
               rel="noopener noreferrer"
-              className="group px-6 py-2.5 rounded-full border border-[#25D366] text-sm font-semibold text-foreground hover:text-[#25D366] hover:bg-[#25D366]/10 hover:shadow-[0_0_15px_rgba(37,211,102,0.4)] transition-all duration-300 flex items-center gap-2 cursor-pointer"
+              className="group px-5 py-2.5 rounded-xl border border-accent-primary text-sm font-bold text-accent-primary hover:border-[#25D366] hover:text-[#25D366] hover:bg-[#25D366]/5 hover:scale-[1.02] transition-all duration-300 flex items-center gap-2 cursor-pointer"
             >
               <span>Let&apos;s Talk</span>
-              <WhatsAppIcon className="w-4 h-4 text-[#25D366] group-hover:scale-110 transition-transform" />
+              <WhatsAppIcon className="w-4 h-4 text-accent-primary group-hover:text-[#25D366] group-hover:scale-110 transition-transform transition-colors duration-300" />
             </a>
           </div>
 
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden text-foreground hover:text-accent-secondary transition-colors duration-300 p-1"
+            className="lg:hidden text-foreground hover:text-accent-primary transition-all duration-300 p-2 rounded-xl bg-slate-50 border border-slate-200 hover:bg-slate-100 flex items-center justify-center cursor-pointer shadow-sm"
             aria-label="Toggle navigation menu"
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isOpen ? <X className="w-5 h-5 transition-transform duration-300 rotate-90" /> : <Menu className="w-5 h-5 transition-transform duration-300" />}
           </button>
         </div>
 
         {/* Mobile Navigation Panel */}
         {isOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-xl border-b border-slate-200 py-8 px-6 animate-fade-in-up">
-            <div className="flex flex-col space-y-5">
+          <div className="lg:hidden absolute top-full left-4 right-4 mt-2 bg-white/95 backdrop-blur-xl border border-slate-100 rounded-3xl py-6 px-6 shadow-2xl animate-fade-in-up">
+            <div className="flex flex-col space-y-4">
               {navItems.map((item) => {
                 const isActive =
                   pathname === item.path ||
@@ -171,26 +172,29 @@ export default function Navbar() {
                     key={item.path}
                     href={item.path}
                     onClick={() => setIsOpen(false)}
-                    className={`text-lg font-semibold tracking-wide py-2 border-b border-slate-100 transition-all duration-300 ${
+                    className={`text-base font-bold tracking-wide py-2.5 px-4 rounded-xl transition-all duration-300 flex items-center justify-between ${
                       isActive
-                        ? "text-accent-secondary"
-                        : "text-muted-silver hover:text-foreground"
+                        ? "text-accent-primary bg-accent-primary/5 pl-6"
+                        : "text-slate-600 hover:text-foreground hover:bg-slate-50"
                     }`}
                   >
-                    {item.name}
+                    <span>{item.name}</span>
+                    {isActive && <span className="w-1.5 h-1.5 rounded-full bg-accent-primary" />}
                   </Link>
                 );
               })}
-              <a
-                href="https://wa.me/919307967995"
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setIsOpen(false)}
-                className="mt-4 w-full py-3 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E] text-center font-semibold text-white shadow-[0_4px_15px_rgba(37,211,102,0.3)] hover:shadow-[0_4px_25px_rgba(37,211,102,0.5)] transition-all duration-300 flex items-center justify-center gap-2"
-              >
-                <span>Let&apos;s Talk</span>
-                <WhatsAppIcon className="w-4 h-4" />
-              </a>
+              <div className="pt-2 border-t border-slate-100">
+                <a
+                  href="https://wa.me/919307967995"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)}
+                  className="group w-full py-3 rounded-xl border border-accent-primary text-center font-bold text-accent-primary hover:border-[#25D366] hover:text-[#25D366] hover:bg-[#25D366]/5 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>Let&apos;s Talk</span>
+                  <WhatsAppIcon className="w-4 h-4 text-accent-primary group-hover:text-[#25D366] transition-colors" />
+                </a>
+              </div>
             </div>
           </div>
         )}
