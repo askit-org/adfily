@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ArrowRight,
   Sparkles,
@@ -26,6 +26,7 @@ import {
   Map,
   Zap,
   TrendingUp,
+  X,
 } from "lucide-react";
 
 // Services Data matching the user request
@@ -202,6 +203,21 @@ const clientLogos = [
 export default function HomePage() {
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
   const [showInfluencerPopup, setShowInfluencerPopup] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [forceExpand, setForceExpand] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+        setForceExpand(false);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   // Influencer Form State
   const [formData, setFormData] = useState({
     fullName: "",
@@ -1190,7 +1206,7 @@ export default function HomePage() {
                 </a>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 <div className="flex items-start gap-4 p-4 rounded-2xl border border-[#4285F4]/20 bg-[#4285F4]/4 shadow-sm">
                   <div className="w-10 h-10 rounded-xl bg-[#4285F4]/10 flex items-center justify-center text-[#4285F4] flex-shrink-0 mt-0.5">
                     <MapPin className="w-5 h-5" />
@@ -1215,6 +1231,20 @@ export default function HomePage() {
                     </span>
                     <span className="text-sm font-semibold text-foreground leading-relaxed">
                       Block no. 14, Nearby metro Mayur Vihar Phase 1, Delhi 110091
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-4 rounded-2xl border border-[#6366F1]/20 bg-[#6366F1]/4 shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-[#6366F1]/10 flex items-center justify-center text-[#6366F1] flex-shrink-0 mt-0.5">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="block text-[10px] uppercase font-bold text-muted-silver">
+                      Sambhajinagar Address
+                    </span>
+                    <span className="text-sm font-semibold text-foreground leading-relaxed">
+                      Meraj complex, Mgm road, Central Naka Rd, Chhatrapati Sambhajinagar 431003
                     </span>
                   </div>
                 </div>
@@ -1257,34 +1287,48 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Floating Influencer Registration Teaser Popup */}
       {showInfluencerPopup && (
-        <div className="fixed bottom-6 right-6 z-40 max-w-sm glass-card p-5 rounded-2xl border border-accent-primary/30 bg-white/95 shadow-2xl flex flex-col gap-3 animate-fade-in-up md:max-w-[320px] max-w-[90vw]">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-accent-primary/10 border border-accent-primary/20 text-accent-secondary flex items-center justify-center flex-shrink-0">
-              <Sparkles className="w-5 h-5 text-accent-primary animate-pulse" />
+        (isScrolled && !forceExpand) ? (
+          <button
+            onClick={() => setForceExpand(true)}
+            title="Are you an Influencer? Apply Now!"
+            className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-gradient-to-tr from-accent-primary to-accent-purple text-white shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 animate-bounce cursor-pointer group border-none"
+          >
+            <Sparkles className="w-5 h-5 text-white animate-pulse" />
+            <span className="absolute right-16 scale-0 group-hover:scale-100 transition-all duration-200 bg-slate-900 text-white text-[10px] font-bold px-3 py-1.5 rounded-lg whitespace-nowrap shadow-md pointer-events-none">
+              Apply as Influencer ✨
+            </span>
+          </button>
+        ) : (
+          <div className="fixed bottom-6 right-6 z-40 max-w-sm glass-card p-5 rounded-2xl border border-accent-primary/30 bg-white/95 shadow-2xl flex flex-col gap-3 animate-fade-in-up md:max-w-[320px] max-w-[90vw]">
+            <div className="flex items-start gap-3 pr-4">
+              <div className="w-10 h-10 rounded-xl bg-accent-primary/10 border border-accent-primary/20 text-accent-secondary flex items-center justify-center flex-shrink-0">
+                <Sparkles className="w-5 h-5 text-accent-primary animate-pulse" />
+              </div>
+              <div>
+                <h4 className="font-syne font-black text-sm text-foreground">
+                  Are you an Influencer?
+                </h4>
+                <p className="text-muted-silver text-xs mt-1 leading-relaxed">
+                  Connect with top brands and monetize your content. Join our
+                  network today!
+                </p>
+              </div>
             </div>
-            <div>
-              <h4 className="font-syne font-black text-sm text-foreground">
-                Are you an Influencer?
-              </h4>
-              <p className="text-muted-silver text-xs mt-1 leading-relaxed">
-                Connect with top brands and monetize your content. Join our
-                network today!
-              </p>
+            <div className="flex gap-2 justify-end mt-1">
+              <a
+                href="#register"
+                onClick={() => {
+                  setForceExpand(false);
+                }}
+                className="px-4 py-1.5 bg-gradient-to-r from-accent-secondary to-accent-purple text-white text-[10px] font-black rounded-lg uppercase tracking-wider shadow-[0_2px_8px_rgba(177,129,33,0.15)] hover:shadow-[0_2px_12px_rgba(177,129,33,0.3)] transition-all cursor-pointer flex items-center gap-1"
+              >
+                <span>Apply Now</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
             </div>
           </div>
-          <div className="flex gap-2 justify-end mt-1">
-            <a
-              href="#register"
-              onClick={() => setShowInfluencerPopup(false)}
-              className="px-4 py-1.5 bg-gradient-to-r from-accent-secondary to-accent-purple text-white text-[10px] font-black rounded-lg uppercase tracking-wider shadow-[0_2px_8px_rgba(177,129,33,0.15)] hover:shadow-[0_2px_12px_rgba(177,129,33,0.3)] transition-all cursor-pointer flex items-center gap-1"
-            >
-              <span>Apply Now</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </a>
-          </div>
-        </div>
+        )
       )}
     </div>
   );
