@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
   try {
     const { data, error } = await supabaseAdmin
       .from('keepalive')
-      .insert([{ pinged_at: new Date().toISOString() }])
+      .upsert({ id: 1, pinged_at: new Date().toISOString() })
       .select();
 
     if (error) {
