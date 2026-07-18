@@ -3,9 +3,12 @@ import { supabaseAdmin } from '@/lib/supabase';
 
 export async function POST(req: NextRequest) {
   try {
+
+    const { data: existingRecord, error: exitingRecordFetchError } = await supabaseAdmin.from('keepalive').select('*')
+
     const { data, error } = await supabaseAdmin
       .from('keepalive')
-      .upsert({ id: 1, pinged_at: new Date().toISOString() })
+      .upsert({ id: existingRecord![0].id, pinged_at: new Date().toISOString() })
       .select();
 
     if (error) {
