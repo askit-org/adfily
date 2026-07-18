@@ -1,0 +1,26 @@
+name: ASKIT Studio Keep-Alive
+
+on:
+  schedule:
+    - cron: "0 3 * * *" # every day at 3:00 AM UTC
+  workflow_dispatch: # allows manual trigger from the Actions tab
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping keepalive endpoint
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X POST "https://www.adfily.com/api/keepalive" \
+            -H "accept: application/json" \
+            -d '')
+
+          echo "Response code: $response"
+
+          if [ "$response" -ge 400 ]; then
+            echo "Keep-alive ping failed with status $response"
+            exit 1
+          fi
+
+          echo "Keep-alive ping succeeded"

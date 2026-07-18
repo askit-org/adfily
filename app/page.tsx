@@ -1230,7 +1230,8 @@ export default function HomePage() {
                       Delhi Address
                     </span>
                     <span className="text-sm font-semibold text-foreground leading-relaxed">
-                      Block no. 14, Nearby metro Mayur Vihar Phase 1, Delhi 110091
+                      Block no. 14, Nearby metro Mayur Vihar Phase 1, Delhi
+                      110091
                     </span>
                   </div>
                 </div>
@@ -1241,10 +1242,11 @@ export default function HomePage() {
                   </div>
                   <div>
                     <span className="block text-[10px] uppercase font-bold text-muted-silver">
-                      Sambhajinagar Address
+                      Aurangabad Address
                     </span>
                     <span className="text-sm font-semibold text-foreground leading-relaxed">
-                      Meraj complex, Mgm road, Central Naka Rd, Chhatrapati Sambhajinagar 431003
+                      Meraj complex, Mgm road, Central Naka Rd, (Aurangabad)
+                      Chhatrapati Sambhajinagar 431003
                     </span>
                   </div>
                 </div>
@@ -1287,8 +1289,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {showInfluencerPopup && (
-        (isScrolled && !forceExpand) ? (
+      {showInfluencerPopup &&
+        (isScrolled && !forceExpand ? (
           <button
             onClick={() => setForceExpand(true)}
             title="Are you an Influencer? Apply Now!"
@@ -1328,8 +1330,7 @@ export default function HomePage() {
               </a>
             </div>
           </div>
-        )
-      )}
+        ))}
     </div>
   );
 }
